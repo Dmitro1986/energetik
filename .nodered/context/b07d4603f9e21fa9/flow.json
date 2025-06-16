@@ -1,0 +1,574 @@
+{
+    "readings_main_electric": [
+        {
+            "id": "reading_test_1749910407623",
+            "meterId": "main_electric",
+            "value": 900,
+            "operator": "TestUser",
+            "timestamp": 1749910407623,
+            "date": "2025-06-14, 08:00:00",
+            "source": "test",
+            "validated": true
+        },
+        {
+            "id": "reading_test_1749960807623",
+            "meterId": "main_electric",
+            "value": 930,
+            "operator": "TestUser",
+            "timestamp": 1749960807623,
+            "date": "2025-06-14, 22:00:00",
+            "source": "test",
+            "validated": true
+        },
+        {
+            "id": "reading_test_1749996807624",
+            "meterId": "main_electric",
+            "value": 930,
+            "operator": "TestUser",
+            "timestamp": 1749996807624,
+            "date": "2025-06-15, 08:30:00",
+            "source": "test",
+            "validated": true
+        },
+        {
+            "id": "reading_test_1750050807624",
+            "meterId": "main_electric",
+            "value": 955,
+            "operator": "TestUser",
+            "timestamp": 1750050807624,
+            "date": "2025-06-15, 23:30:00",
+            "source": "test",
+            "validated": true
+        },
+        {
+            "id": "reading_1750054912287",
+            "meterId": "main_electric",
+            "value": 1,
+            "operator": "Wlad",
+            "timestamp": 1750054912287,
+            "date": "16.06.2025, 09:21:52",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750054971127",
+            "meterId": "main_electric",
+            "value": 2,
+            "operator": "Wlad",
+            "timestamp": 1750054971127,
+            "date": "16.06.2025, 09:22:51",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750055004362",
+            "meterId": "main_electric",
+            "value": 3,
+            "operator": "Wlad",
+            "timestamp": 1750055004362,
+            "date": "16.06.2025, 09:23:24",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750055026964",
+            "meterId": "main_electric",
+            "value": 3.5,
+            "operator": "Wlad",
+            "timestamp": 1750055026964,
+            "date": "16.06.2025, 09:23:46",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750055364893",
+            "meterId": "main_electric",
+            "value": 4,
+            "operator": "Wlad",
+            "timestamp": 1750055364893,
+            "date": "16.06.2025, 09:29:24",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750058179747",
+            "meterId": "main_electric",
+            "value": 5,
+            "operator": "Wlad",
+            "timestamp": 1750058179747,
+            "date": "16.06.2025, 10:16:19",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750058244454",
+            "meterId": "main_electric",
+            "value": 6,
+            "operator": "Wlad1",
+            "timestamp": 1750058244454,
+            "date": "16.06.2025, 10:17:24",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750058799411",
+            "meterId": "main_electric",
+            "value": 6,
+            "operator": "Wlad1",
+            "timestamp": 1750058799411,
+            "date": "16.06.2025, 10:26:39",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750058898685",
+            "meterId": "main_electric",
+            "value": 7,
+            "operator": "Wlad1",
+            "timestamp": 1750058898685,
+            "date": "16.06.2025, 10:28:18",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750059008597",
+            "meterId": "main_electric",
+            "value": 8,
+            "operator": "Wlad1",
+            "timestamp": 1750059008597,
+            "date": "16.06.2025, 10:30:08",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750059834461",
+            "meterId": "main_electric",
+            "value": 11,
+            "operator": "Wlad1",
+            "timestamp": 1750059834461,
+            "date": "16.06.2025, 10:43:54",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750059935471",
+            "meterId": "main_electric",
+            "value": 12,
+            "operator": "Wlad1",
+            "timestamp": 1750059935471,
+            "date": "16.06.2025, 10:45:35",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750060897790",
+            "meterId": "main_electric",
+            "value": 13,
+            "operator": "Wlad",
+            "timestamp": 1750060897790,
+            "date": "16.06.2025, 11:01:37",
+            "source": "dashboard",
+            "note": "",
+            "validated": true
+        },
+        {
+            "id": "reading_1750065266454",
+            "meterId": "main_electric",
+            "value": 14,
+            "operator": "Wlad",
+            "timestamp": 1750065266454,
+            "date": "16.06.2025, 12:14:26",
+            "source": "dashboard",
+            "note": "",
+            "validated": true
+        },
+        {
+            "id": "reading_1750072794838",
+            "meterId": "main_electric",
+            "value": 15,
+            "operator": "Wlad",
+            "timestamp": 1750072794838,
+            "date": "16.06.2025, 14:19:54",
+            "source": "dashboard",
+            "note": "",
+            "validated": true
+        },
+        {
+            "id": "reading_1750073180851",
+            "meterId": "main_electric",
+            "value": 16,
+            "operator": "Wlad",
+            "timestamp": 1750073180851,
+            "date": "16.06.2025, 14:26:20",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750073588862",
+            "meterId": "main_electric",
+            "value": 17,
+            "operator": "Wlad2",
+            "timestamp": 1750073588862,
+            "date": "16.06.2025, 14:33:08",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750077675039",
+            "meterId": "main_electric",
+            "value": 18,
+            "operator": "Wlad",
+            "timestamp": 1750077675039,
+            "date": "16.06.2025, 15:41:15",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750078188469",
+            "meterId": "main_electric",
+            "value": 19,
+            "operator": "Wlad",
+            "timestamp": 1750078188469,
+            "date": "16.06.2025, 15:49:48",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750079097312",
+            "meterId": "main_electric",
+            "value": 20,
+            "operator": "Wlad",
+            "timestamp": 1750079097312,
+            "date": "16.06.2025, 16:04:57",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750079372691",
+            "meterId": "main_electric",
+            "value": 21,
+            "operator": "Wlad",
+            "timestamp": 1750079372691,
+            "date": "16.06.2025, 16:09:32",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750079705045",
+            "meterId": "main_electric",
+            "value": 22,
+            "operator": "Wlad",
+            "timestamp": 1750079705045,
+            "date": "16.06.2025, 16:15:05",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750079931613",
+            "meterId": "main_electric",
+            "value": 23,
+            "operator": "Wlad",
+            "timestamp": 1750079931613,
+            "date": "16.06.2025, 16:18:51",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750080251026",
+            "meterId": "main_electric",
+            "value": 24,
+            "operator": "Wlad",
+            "timestamp": 1750080251026,
+            "date": "16.06.2025, 16:24:11",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750080787933",
+            "meterId": "main_electric",
+            "value": 25,
+            "operator": "Wlad",
+            "timestamp": 1750080787933,
+            "date": "16.06.2025, 16:33:07",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750080875524",
+            "meterId": "main_electric",
+            "value": 26,
+            "operator": "Wlad",
+            "timestamp": 1750080875524,
+            "date": "16.06.2025, 16:34:35",
+            "source": "dashboard",
+            "validated": true
+        },
+        {
+            "id": "reading_1750083225803",
+            "meterId": "main_electric",
+            "value": 27,
+            "operator": "Wlad",
+            "timestamp": 1750083225803,
+            "date": "16.06.2025, 17:13:45",
+            "source": "dashboard",
+            "validated": true
+        }
+    ],
+    "readings_wrapper": {
+        "readings_main_electric": [
+            {
+                "id": "reading_1750054912287",
+                "meterId": "main_electric",
+                "value": 1,
+                "operator": "Wlad",
+                "timestamp": 1750054912287,
+                "date": "16.06.2025, 09:21:52",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750054971127",
+                "meterId": "main_electric",
+                "value": 2,
+                "operator": "Wlad",
+                "timestamp": 1750054971127,
+                "date": "16.06.2025, 09:22:51",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750055004362",
+                "meterId": "main_electric",
+                "value": 3,
+                "operator": "Wlad",
+                "timestamp": 1750055004362,
+                "date": "16.06.2025, 09:23:24",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750055026964",
+                "meterId": "main_electric",
+                "value": 3.5,
+                "operator": "Wlad",
+                "timestamp": 1750055026964,
+                "date": "16.06.2025, 09:23:46",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750055364893",
+                "meterId": "main_electric",
+                "value": 4,
+                "operator": "Wlad",
+                "timestamp": 1750055364893,
+                "date": "16.06.2025, 09:29:24",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750058179747",
+                "meterId": "main_electric",
+                "value": 5,
+                "operator": "Wlad",
+                "timestamp": 1750058179747,
+                "date": "16.06.2025, 10:16:19",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750058244454",
+                "meterId": "main_electric",
+                "value": 6,
+                "operator": "Wlad1",
+                "timestamp": 1750058244454,
+                "date": "16.06.2025, 10:17:24",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750058799411",
+                "meterId": "main_electric",
+                "value": 6,
+                "operator": "Wlad1",
+                "timestamp": 1750058799411,
+                "date": "16.06.2025, 10:26:39",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750058898685",
+                "meterId": "main_electric",
+                "value": 7,
+                "operator": "Wlad1",
+                "timestamp": 1750058898685,
+                "date": "16.06.2025, 10:28:18",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750059008597",
+                "meterId": "main_electric",
+                "value": 8,
+                "operator": "Wlad1",
+                "timestamp": 1750059008597,
+                "date": "16.06.2025, 10:30:08",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750059834461",
+                "meterId": "main_electric",
+                "value": 11,
+                "operator": "Wlad1",
+                "timestamp": 1750059834461,
+                "date": "16.06.2025, 10:43:54",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750059935471",
+                "meterId": "main_electric",
+                "value": 12,
+                "operator": "Wlad1",
+                "timestamp": 1750059935471,
+                "date": "16.06.2025, 10:45:35",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750060897790",
+                "meterId": "main_electric",
+                "value": 13,
+                "operator": "Wlad",
+                "timestamp": 1750060897790,
+                "date": "16.06.2025, 11:01:37",
+                "source": "dashboard",
+                "note": "",
+                "validated": true
+            },
+            {
+                "id": "reading_1750065266454",
+                "meterId": "main_electric",
+                "value": 14,
+                "operator": "Wlad",
+                "timestamp": 1750065266454,
+                "date": "16.06.2025, 12:14:26",
+                "source": "dashboard",
+                "note": "",
+                "validated": true
+            },
+            {
+                "id": "reading_1750072794838",
+                "meterId": "main_electric",
+                "value": 15,
+                "operator": "Wlad",
+                "timestamp": 1750072794838,
+                "date": "16.06.2025, 14:19:54",
+                "source": "dashboard",
+                "note": "",
+                "validated": true
+            },
+            {
+                "id": "reading_1750073180851",
+                "meterId": "main_electric",
+                "value": 16,
+                "operator": "Wlad",
+                "timestamp": 1750073180851,
+                "date": "16.06.2025, 14:26:20",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750073588862",
+                "meterId": "main_electric",
+                "value": 17,
+                "operator": "Wlad2",
+                "timestamp": 1750073588862,
+                "date": "16.06.2025, 14:33:08",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750077675039",
+                "meterId": "main_electric",
+                "value": 18,
+                "operator": "Wlad",
+                "timestamp": 1750077675039,
+                "date": "16.06.2025, 15:41:15",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750078188469",
+                "meterId": "main_electric",
+                "value": 19,
+                "operator": "Wlad",
+                "timestamp": 1750078188469,
+                "date": "16.06.2025, 15:49:48",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750079097312",
+                "meterId": "main_electric",
+                "value": 20,
+                "operator": "Wlad",
+                "timestamp": 1750079097312,
+                "date": "16.06.2025, 16:04:57",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750079372691",
+                "meterId": "main_electric",
+                "value": 21,
+                "operator": "Wlad",
+                "timestamp": 1750079372691,
+                "date": "16.06.2025, 16:09:32",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750079705045",
+                "meterId": "main_electric",
+                "value": 22,
+                "operator": "Wlad",
+                "timestamp": 1750079705045,
+                "date": "16.06.2025, 16:15:05",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750079931613",
+                "meterId": "main_electric",
+                "value": 23,
+                "operator": "Wlad",
+                "timestamp": 1750079931613,
+                "date": "16.06.2025, 16:18:51",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750080251026",
+                "meterId": "main_electric",
+                "value": 24,
+                "operator": "Wlad",
+                "timestamp": 1750080251026,
+                "date": "16.06.2025, 16:24:11",
+                "source": "dashboard",
+                "validated": true
+            },
+            {
+                "id": "reading_1750080787933",
+                "meterId": "main_electric",
+                "value": 25,
+                "operator": "Wlad",
+                "timestamp": 1750080787933,
+                "date": "16.06.2025, 16:33:07",
+                "source": "dashboard",
+                "validated": true
+            }
+        ]
+    }
+}

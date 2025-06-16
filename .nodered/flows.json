@@ -1,0 +1,522 @@
+[
+    {
+        "id": "b07d4603f9e21fa9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f4295493b9317073",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "63a029640d5e870a",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d94404e769aeb0e3",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ead89403f19bf54d",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e86f2fd3a1430210",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "4a24fb16ec28e780",
+        "type": "ui_group",
+        "name": "ui-grup",
+        "tab": "ead89403f19bf54d",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "82e8868c9dc7bdc3",
+        "type": "ui_group",
+        "name": "Ввод показаний",
+        "tab": "ead89403f19bf54d",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0eb530cb159fd223",
+        "type": "ui_button",
+        "z": "b07d4603f9e21fa9",
+        "name": "",
+        "group": "4a24fb16ec28e780",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "label": "сохранить показания",
+        "tooltip": "Нажмите для сохранения",
+        "color": "#FFFFFF",
+        "bgcolor": "#4CAF50",
+        "className": "",
+        "icon": "",
+        "payload": "submit",
+        "payloadType": "str",
+        "topic": "save_reading",
+        "topicType": "str",
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "b6db91772ee738fc"
+            ]
+        ]
+    },
+    {
+        "id": "b6db91772ee738fc",
+        "type": "function",
+        "z": "b07d4603f9e21fa9",
+        "name": "Валидация",
+        "func": "// ОТЛАДКА: Проверяем что код вообще выполняется\nnode.warn(\"🚀 Код запущен! Topic: \" + msg.topic + \", Payload: \" + JSON.stringify(msg.payload));\n\n// 1. Сохраняем данные от поля показаний\nif (msg.topic === \"meter_reading\") {\n    node.warn(\"💾 Сохраняем показания: \" + msg.payload);\n    let reading = msg.payload;\n    // Если это строка, преобразуем в число\n    if (typeof reading === 'string') {\n        reading = parseFloat(reading.replace(',', '.'));\n    }\n    flow.set('current_reading', reading);\n    node.warn(\"✅ Показания сохранены: \" + reading);\n    return null;\n}\n\n// 2. Сохраняем данные от поля оператора\nif (msg.topic === \"operator_name\") {\n    node.warn(\"💾 Сохраняем оператора: \" + msg.payload);\n    flow.set('current_operator', msg.payload);\n    node.warn(\"✅ Оператор сохранен: \" + msg.payload);\n    return null;\n}\n\n// 3. Валидация при сохранении\nif (msg.topic === \"save_reading\") {\n    node.warn(\"🔥 НАЧАЛАСЬ ВАЛИДАЦИЯ!\");\n\n    const meterReading = flow.get('current_reading');\n    const operator = flow.get('current_operator') || '';\n\n    node.warn(\"📊 Собранные данные: показания=\" + meterReading + \", оператор=\" + operator);\n\n    // Проверяем все поля\n    const errors = [];\n\n    if (!meterReading || isNaN(meterReading) || meterReading <= 0) {\n        errors.push('Введите корректные показания счетчика');\n    }\n\n    if (operator.trim() === '') {\n        errors.push('Укажите кто снимал показания');\n    }\n\n    node.warn(\"🔍 Ошибки валидации: \" + JSON.stringify(errors));\n\n    if (errors.length > 0) {\n        node.warn(\"❌ Есть ошибки, отправляем сообщение об ошибке\");\n        const errorMsg = {\n            payload: {\n                error: true,\n                message: errors.join('; ')\n            }\n        };\n        return [errorMsg, null];\n    }\n\n    // ИСПРАВЛЕНО: Правильное чтение данных из файла\n    node.warn(\"📂 Читаем файл...\");\n    const fileData = flow.get('readings_main_electric', 'file') || {};\n\n    // Преобразуем объект с числовыми ключами в массив\n    let lastReadings = [];\n    if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n        if (Array.isArray(fileData)) {\n            lastReadings = fileData;\n        } else {\n            // Преобразуем объект в массив по числовым ключам\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            lastReadings = keys.map(key => fileData[key]);\n            node.warn(\"✅ Преобразовали объект в массив, элементов: \" + lastReadings.length);\n        }\n    }\n\n    node.warn(\"📊 Итого записей в массиве: \" + lastReadings.length);\n    const lastReading = lastReadings[lastReadings.length - 1];\n    node.warn(\"🎯 Последняя запись: \" + JSON.stringify(lastReading));\n\n    // Проверяем что новые показания больше предыдущих\n    if (lastReading && meterReading <= lastReading.value) {\n        node.warn(\"❌ Показания меньше предыдущих!\");\n        const errorMsg = {\n            payload: {\n                error: true,\n                message: `Показания должны быть больше предыдущих (${lastReading.value} кВт·ч)`\n            }\n        };\n        return [errorMsg, null];\n    }\n\n    // Формируем валидированные данные\n    const validatedData = {\n        meterId: 'main_electric',\n        reading: parseFloat(meterReading),\n        operator: operator.trim(),\n        timestamp: Date.now(),\n        date: new Date().toLocaleString('ru-RU'),\n        source: 'dashboard'\n    };\n    // Второй выход - к узлу сохранения\n    return [null, { payload: validatedData }];\n}\n\n    // node.warn(\"📋 Базовые данные сформированы: \" + JSON.stringify(validatedData));\n\n    // Рассчитываем потребление если есть предыдущие показания\n//     if (lastReading) {\n//         node.warn(\"🧮 Начинаем расчет потребления...\");\n//         const consumption = validatedData.reading - lastReading.value;\n//         const timeDiff = validatedData.timestamp - lastReading.timestamp;\n//         const days = timeDiff / (1000 * 60 * 60 * 24);\n\n//         validatedData.consumption = Math.round(consumption * 100) / 100;\n//         validatedData.daysSinceLastReading = Math.round(days * 10) / 10;\n//         validatedData.avgDailyConsumption = days > 0 ? Math.round((consumption / days) * 100) / 100 : 0;\n//         validatedData.lastReading = lastReading.value;\n\n//         node.warn(`🧮 Расчет: ${validatedData.reading} - ${lastReading.value} = ${consumption}`);\n//         node.warn(`📅 Дней: ${days.toFixed(2)}, Среднее: ${validatedData.avgDailyConsumption}`);\n//         node.warn(\"✅ Расчет завершен!\");\n//     } else {\n//         node.warn(\"⚠️ Нет предыдущих записей для расчета потребления\");\n//     }\n\n//     const successMsg = {\n//         payload: validatedData\n//     };\n\n//     node.warn(\"🎉 Отправляем успешные данные: \" + JSON.stringify(successMsg));\n//     return [null, successMsg];\n// }\n\n// node.warn(\"⚠️ Неизвестный topic: \" + msg.topic);\nreturn null;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "b11efb526fc1cbcd"
+            ],
+            [
+                "080dc9e30d685a8b"
+            ]
+        ]
+    },
+    {
+        "id": "080dc9e30d685a8b",
+        "type": "function",
+        "z": "b07d4603f9e21fa9",
+        "name": "Сохранение данных",
+        "func": "// УЗЕЛ \"СОХРАНЕНИЕ\" - ПЕРЕХОД НА MEMORY STORAGE\n\nconst data = msg.payload;\nnode.warn(\"💾 Начинаем сохранение данных...\");\n\nlet readings = [];\n\ntry {\n    // Сначала пробуем memory storage\n    let memoryData = flow.get('readings_main_electric') || [];\n    \n    // Потом пробуем file storage\n    let fileData = flow.get('readings_main_electric', 'file') || {};\n    \n    node.warn(\"📁 Memory storage: \" + (Array.isArray(memoryData) ? memoryData.length : \"не массив\"));\n    node.warn(\"📁 File storage: тип=\" + typeof fileData + \", ключи=\" + Object.keys(fileData).length);\n    \n    // Используем memory storage как основной\n    if (Array.isArray(memoryData) && memoryData.length > 0) {\n        readings = memoryData;\n        node.warn(\"✅ Используем memory storage: \" + readings.length + \" записей\");\n    } else if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n        // Fallback на file storage\n        if (Array.isArray(fileData)) {\n            readings = fileData;\n        } else {\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            readings = keys.map(key => fileData[key]);\n        }\n        node.warn(\"🔄 Восстановили из file storage: \" + readings.length + \" записей\");\n    } else {\n        node.warn(\"📝 Создаем новый массив\");\n    }\n    \n} catch (error) {\n    node.error(\"❌ Ошибка чтения: \" + error.message);\n    readings = [];\n}\n\n// Создаем новую запись\nconst newReading = {\n    id: `reading_${data.timestamp}`,\n    meterId: data.meterId,\n    value: data.reading,\n    operator: data.operator,\n    timestamp: data.timestamp,\n    date: data.date,\n    source: data.source,\n    validated: true\n};\n\nreadings.push(newReading);\nreadings.sort((a, b) => a.timestamp - b.timestamp);\n\nif (readings.length > 1000) {\n    readings = readings.slice(-1000);\n}\n\nnode.warn(\"📊 Итого записей для сохранения: \" + readings.length);\n\n// ДВОЙНОЕ СОХРАНЕНИЕ: memory + file + global\ntry {\n    // Основное хранилище - memory\n    flow.set('readings_main_electric', readings);\n    node.warn(\"✅ Сохранено в memory storage\");\n    \n    // Дублирование в file storage\n    flow.set('readings_main_electric', readings, 'file');\n    node.warn(\"✅ Дублировано в file storage\");\n    \n    // Дублирование в global storage\n    global.set('readings_main_electric', readings);\n    node.warn(\"✅ Дублировано в global storage\");\n    \n    // Проверка сохранения\n    const checkMemory = flow.get('readings_main_electric') || [];\n    const checkFile = flow.get('readings_main_electric', 'file') || {};\n    const checkGlobal = global.get('readings_main_electric') || [];\n    \n    node.warn(\"🔍 Проверка сохранения:\");\n    node.warn(\"  Memory: \" + (Array.isArray(checkMemory) ? checkMemory.length : \"не массив\"));\n    node.warn(\"  File: \" + (Array.isArray(checkFile) ? checkFile.length : Object.keys(checkFile).length));\n    node.warn(\"  Global: \" + (Array.isArray(checkGlobal) ? checkGlobal.length : \"не массив\"));\n    \n} catch (error) {\n    node.error(\"❌ Ошибка сохранения: \" + error.message);\n}\n\nreturn {\n    payload: {\n        success: true,\n        reading: data.reading,\n        operator: data.operator,\n        timestamp: data.timestamp,\n        totalReadings: readings.length,\n        message: `Показания ${data.reading} кВт·ч сохранены!`\n    }\n};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "c0bd619211d46e21",
+                "7079e0341a145ceb"
+            ]
+        ]
+    },
+    {
+        "id": "7079e0341a145ceb",
+        "type": "link out",
+        "z": "b07d4603f9e21fa9",
+        "name": "К расчетам",
+        "mode": "link",
+        "links": [
+            "b0b132cd223ce431"
+        ],
+        "x": 595,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c0bd619211d46e21",
+        "type": "ui_toast",
+        "z": "b07d4603f9e21fa9",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Успех",
+        "x": 350,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "b11efb526fc1cbcd",
+        "type": "ui_toast",
+        "z": "b07d4603f9e21fa9",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Ошибка",
+        "x": 360,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8278fbae390999fe",
+        "type": "ui_text_input",
+        "z": "b07d4603f9e21fa9",
+        "name": "Operator",
+        "label": "Кто снимал показания",
+        "tooltip": "Введите ваше имя",
+        "group": "82e8868c9dc7bdc3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "operator_name",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "str",
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "b6db91772ee738fc"
+            ]
+        ]
+    },
+    {
+        "id": "e19d10eadf7b6ba4",
+        "type": "ui_text_input",
+        "z": "b07d4603f9e21fa9",
+        "name": "Показания счетчика",
+        "label": "Показания счетчика",
+        "tooltip": "Введите показания",
+        "group": "4a24fb16ec28e780",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "meter_reading",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "b6db91772ee738fc"
+            ]
+        ]
+    },
+    {
+        "id": "45c06951fdd468c1",
+        "type": "inject",
+        "z": "b07d4603f9e21fa9",
+        "name": "Добавить тестовые данные",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "test_data",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "ac6199d6d1efbed6"
+            ]
+        ]
+    },
+    {
+        "id": "ac6199d6d1efbed6",
+        "type": "function",
+        "z": "b07d4603f9e21fa9",
+        "name": "function 1",
+        "func": "// FUNCTION NODE: \"Тестовые данные\"\n\nnode.warn(\"🎯 Добавляем тестовые исторические данные...\");\n\n// Получаем существующие данные\nlet readings = global.get('readings_main_electric') || [];\nnode.warn(\"📊 Текущие данные: \" + readings.length + \" записей\");\n\n// Создаем данные за позавчера\nconst dayBefore = new Date();\ndayBefore.setDate(dayBefore.getDate() - 2);\nconst dayBeforeStr = dayBefore.toISOString().split('T')[0];\n\nconst testDataDayBefore = [\n    {\n        id: `reading_test_${dayBefore.getTime()}`,\n        meterId: 'main_electric',\n        value: 900,  // Начало позавчера\n        operator: 'TestUser',\n        timestamp: dayBefore.getTime(),\n        date: `${dayBeforeStr}, 08:00:00`,\n        source: 'test',\n        validated: true\n    },\n    {\n        id: `reading_test_${dayBefore.getTime() + 50400000}`, // +14 часов\n        meterId: 'main_electric',\n        value: 930,  // Конец позавчера (потребление 30 кВт·ч)\n        operator: 'TestUser',\n        timestamp: dayBefore.getTime() + 50400000,\n        date: `${dayBeforeStr}, 22:00:00`,\n        source: 'test',\n        validated: true\n    }\n];\n\n// Создаем данные за вчера\nconst yesterday = new Date();\nyesterday.setDate(yesterday.getDate() - 1);\nconst yesterdayStr = yesterday.toISOString().split('T')[0];\n\nconst testDataYesterday = [\n    {\n        id: `reading_test_${yesterday.getTime()}`,\n        meterId: 'main_electric',\n        value: 930,  // Начало вчера (равно концу позавчера)\n        operator: 'TestUser',\n        timestamp: yesterday.getTime(),\n        date: `${yesterdayStr}, 08:30:00`,\n        source: 'test',\n        validated: true\n    },\n    {\n        id: `reading_test_${yesterday.getTime() + 54000000}`, // +15 часов\n        meterId: 'main_electric',\n        value: 955,  // Конец вчера (потребление 25 кВт·ч)\n        operator: 'TestUser',\n        timestamp: yesterday.getTime() + 54000000,\n        date: `${yesterdayStr}, 23:30:00`,\n        source: 'test',\n        validated: true\n    }\n];\n\n// Фильтруем существующие тестовые данные (если есть)\nconst realReadings = readings.filter(r => r.source !== 'test');\n\n// Объединяем все данные\nconst allData = [...testDataDayBefore, ...testDataYesterday, ...realReadings];\nallData.sort((a, b) => a.timestamp - b.timestamp);\n\n// Сохраняем во все хранилища\ntry {\n    global.set('readings_main_electric', allData);\n    flow.set('readings_main_electric', allData);\n    flow.set('readings_main_electric', allData, 'file');\n    \n    node.warn(\"✅ Тестовые данные добавлены:\");\n    node.warn(`  ${dayBeforeStr}: 900 → 930 кВт·ч (30 кВт·ч потребление)`);\n    node.warn(`  ${yesterdayStr}: 930 → 955 кВт·ч (25 кВт·ч потребление)`);\n    node.warn(\"📊 Всего записей: \" + allData.length);\n    node.warn(\"📋 Реальных записей: \" + realReadings.length);\n    node.warn(\"📋 Тестовых записей: \" + (allData.length - realReadings.length));\n    \n} catch (error) {\n    node.error(\"❌ Ошибка сохранения: \" + error.message);\n}\n\nreturn { \n    payload: { \n        success: true, \n        message: \"Тестовые данные добавлены\",\n        totalRecords: allData.length,\n        testRecords: allData.length - realReadings.length\n    } \n};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b0b132cd223ce431",
+        "type": "link in",
+        "z": "f4295493b9317073",
+        "name": "от Flow 1",
+        "links": [
+            "7079e0341a145ceb"
+        ],
+        "x": 155,
+        "y": 120,
+        "wires": [
+            [
+                "db63c1e8f79d07d6"
+            ]
+        ]
+    },
+    {
+        "id": "db63c1e8f79d07d6",
+        "type": "function",
+        "z": "f4295493b9317073",
+        "name": "Анализ данных",
+        "func": "// УЗЕЛ \"АНАЛИЗ ДАННЫХ\" - ПОЛНЫЙ КОД\n\nnode.warn(\"🚀 Начинаем анализ данных...\");\n\nconst data = msg.payload;\n\n// ========== БЛОК 1: ПОИСК ДАННЫХ ==========\nlet allReadings = [];\nlet dataSource = \"не найден\";\n\ntry {\n    // Попытка 1: Memory storage\n    let memoryData = flow.get('readings_main_electric') || [];\n    if (Array.isArray(memoryData) && memoryData.length > 0) {\n        allReadings = memoryData;\n        dataSource = \"memory storage\";\n    }\n    \n    // Попытка 2: Global storage\n    if (allReadings.length === 0) {\n        let globalData = global.get('readings_main_electric') || [];\n        if (Array.isArray(globalData) && globalData.length > 0) {\n            allReadings = globalData;\n            dataSource = \"global storage\";\n        }\n    }\n    \n    // Попытка 3: File storage\n    if (allReadings.length === 0) {\n        let fileData = flow.get('readings_main_electric', 'file') || {};\n        if (Array.isArray(fileData)) {\n            allReadings = fileData;\n            dataSource = \"file storage (массив)\";\n        } else if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            if (keys.length > 0) {\n                allReadings = keys.map(key => fileData[key]);\n                dataSource = \"file storage (объект)\";\n            }\n        }\n    }\n    \n} catch (error) {\n    node.error(\"❌ Ошибка поиска данных: \" + error.message);\n}\n\nnode.warn(\"📊 ИТОГО найдено записей: \" + allReadings.length + \" из источника: \" + dataSource);\n\nif (allReadings.length === 0) {\n    node.warn(\"⚠️ НЕТ ДАННЫХ ДЛЯ АНАЛИЗА!\");\n    return null;\n}\n\nnode.warn(\"📋 Первая запись: \" + JSON.stringify(allReadings[0]));\nnode.warn(\"📋 Последняя запись: \" + JSON.stringify(allReadings[allReadings.length - 1]));\n\n// ========== БЛОК 2: ГРУППИРОВКА ПО ДНЯМ ==========\nnode.warn(\"📅 Группируем показания по дням...\");\n\nfunction groupByDays(readings) {\n    const groups = {};\n    try {\n        readings.forEach((reading, index) => {\n            if (!reading.timestamp) {\n                node.warn(`⚠️ Пропускаем запись ${index} без timestamp`);\n                return;\n            }\n            \n            const date = new Date(reading.timestamp);\n            if (isNaN(date.getTime())) {\n                node.warn(`⚠️ Некорректная дата в записи ${index}: ${reading.timestamp}`);\n                return;\n            }\n            \n            const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;\n            \n            if (!groups[dayKey]) {\n                groups[dayKey] = [];\n            }\n            groups[dayKey].push(reading);\n        });\n    } catch (error) {\n        node.error(\"❌ Ошибка группировки: \" + error.message);\n    }\n    return groups;\n}\n\nconst dayGroups = groupByDays(allReadings);\nconst dayKeys = Object.keys(dayGroups).sort();\n\nnode.warn(\"📊 Дней с показаниями: \" + dayKeys.length);\nnode.warn(\"📅 Даты: \" + dayKeys.join(', '));\n\n// Определяем сегодняшний день\nconst today = new Date().toISOString().split('T')[0];\nnode.warn(\"📆 Сегодня: \" + today);\n\n// ========== БЛОК 3: РАСЧЕТ ЗАВЕРШЕННЫХ ДНЕЙ ==========\nnode.warn(\"🧮 Рассчитываем потребление по завершенным дням...\");\n\nconst completedDays = [];\nlet totalConsumption = 0;\n\ntry {\n    for (let i = 1; i < dayKeys.length; i++) {\n        const currentDayKey = dayKeys[i];\n        const prevDayKey = dayKeys[i - 1];\n        \n        const currentDayReadings = dayGroups[currentDayKey];\n        const prevDayReadings = dayGroups[prevDayKey];\n        \n        // Находим максимальные показания каждого дня\n        const currentMax = Math.max(...currentDayReadings.map(r => r.value));\n        const prevMax = Math.max(...prevDayReadings.map(r => r.value));\n        \n        const dayConsumption = currentMax - prevMax;\n        \n        // Добавляем только завершенные дни (не сегодняшний)\n        if (currentDayKey !== today) {\n            totalConsumption += dayConsumption;\n            completedDays.push({\n                date: currentDayKey,\n                consumption: Math.round(dayConsumption * 100) / 100,\n                startReading: prevMax,\n                endReading: currentMax\n            });\n            \n            node.warn(`📊 ${currentDayKey}: ${prevMax} → ${currentMax} = ${dayConsumption} кВт·ч`);\n        } else {\n            node.warn(`⏰ ${currentDayKey} (сегодня): ${prevMax} → ${currentMax} = ${dayConsumption} кВт·ч - не учитываем как завершенный`);\n        }\n    }\n    \n    node.warn(\"✅ Завершенных дней обработано: \" + completedDays.length);\n    node.warn(\"📈 Общее потребление завершенных дней: \" + totalConsumption + \" кВт·ч\");\n    \n} catch (error) {\n    node.error(\"❌ Ошибка расчета завершенных дней: \" + error.message);\n}\n\n// ========== БЛОК 4: РАСЧЕТ ТЕКУЩЕГО ДНЯ ==========\nnode.warn(\"⏰ Рассчитываем текущий день...\");\n\nlet currentDayData = null;\n\nif (dayGroups[today] && dayKeys.length > 1) {\n    try {\n        const todayReadings = dayGroups[today];\n        \n        // Находим предыдущий день для сравнения\n        const yesterdayKey = dayKeys[dayKeys.length - 2]; // предпоследний день\n        const yesterdayReadings = dayGroups[yesterdayKey];\n        const yesterdayMax = Math.max(...yesterdayReadings.map(r => r.value));\n        \n        const currentReading = Math.max(...todayReadings.map(r => r.value));\n        \n        node.warn(\"📊 Данные сегодня:\");\n        node.warn(\"  Вчера (\" + yesterdayKey + \") макс: \" + yesterdayMax);\n        node.warn(\"  Сегодня (\" + today + \") макс: \" + currentReading);\n        \n        // Расчет времени\n        const now = new Date();\n        const hoursElapsed = now.getHours() + (now.getMinutes() / 60) + (now.getSeconds() / 3600);\n        const safeHours = Math.max(hoursElapsed, 0.1); // минимум 6 минут\n        \n        const currentConsumption = currentReading - yesterdayMax;\n        const projectedDaily = (currentConsumption / safeHours) * 24;\n        \n        currentDayData = {\n            date: today,\n            consumption: Math.round(currentConsumption * 100) / 100,\n            hoursElapsed: Math.round(safeHours * 10) / 10,\n            projectedDaily: Math.round(projectedDaily * 100) / 100,\n            startReading: yesterdayMax,\n            currentReading: currentReading\n        };\n        \n        node.warn(\"✅ Текущий день:\");\n        node.warn(\"  Потребление: \" + currentDayData.consumption + \" кВт·ч\");\n        node.warn(\"  Часов прошло: \" + currentDayData.hoursElapsed);\n        node.warn(\"  Прогноз на день: \" + currentDayData.projectedDaily + \" кВт·ч\");\n        \n    } catch (error) {\n        node.error(\"❌ Ошибка расчета текущего дня: \" + error.message);\n        currentDayData = null;\n    }\n} else {\n    if (!dayGroups[today]) {\n        node.warn(\"⚠️ Нет показаний на сегодня\");\n    }\n    if (dayKeys.length <= 1) {\n        node.warn(\"⚠️ Нужно минимум 2 дня для сравнения\");\n    }\n}\n\n// ========== БЛОК 5: СТАТИСТИКА ==========\nnode.warn(\"📈 Рассчитываем общую статистику...\");\n\nconst avgDailyConsumption = completedDays.length > 0 ? \n    Math.round((totalConsumption / completedDays.length) * 100) / 100 : 0;\n\nconst statsData = {\n    totalConsumption: Math.round(totalConsumption * 100) / 100,\n    avgDailyConsumption: avgDailyConsumption,\n    totalReadings: allReadings.length,\n    completedDaysCount: completedDays.length,\n    currentDayExists: !!currentDayData,\n    daysWithData: dayKeys.length\n};\n\nnode.warn(\"📊 Статистика:\");\nnode.warn(\"  Общее потребление: \" + statsData.totalConsumption + \" кВт·ч\");\nnode.warn(\"  Среднее в день: \" + statsData.avgDailyConsumption + \" кВт·ч\");\nnode.warn(\"  Всего показаний: \" + statsData.totalReadings);\nnode.warn(\"  Завершенных дней: \" + statsData.completedDaysCount);\nnode.warn(\"  Дней с данными: \" + statsData.daysWithData);\n\n// ========== БЛОК 6: ФОРМИРОВАНИЕ ВЫХОДОВ ==========\nnode.warn(\"📤 Формируем выходные сообщения...\");\n\nconst outputs = [];\n\n// Выход 1: Завершенные дни\nif (completedDays.length > 0) {\n    outputs[0] = { \n        payload: { \n            type: \"completed\", \n            data: completedDays \n        } \n    };\n    node.warn(\"✅ Выход 1: завершенные дни (\" + completedDays.length + \" записей)\");\n} else {\n    outputs[0] = null;\n    node.warn(\"⚠️ Выход 1: нет завершенных дней\");\n}\n\n// Выход 2: Текущий день\nif (currentDayData) {\n    outputs[1] = { \n        payload: { \n            type: \"current\", \n            data: currentDayData \n        } \n    };\n    node.warn(\"✅ Выход 2: текущий день\");\n} else {\n    outputs[1] = null;\n    node.warn(\"⚠️ Выход 2: нет данных текущего дня\");\n}\n\n// Выход 3: Статистика (всегда есть)\noutputs[2] = { \n    payload: { \n        type: \"stats\", \n        data: statsData \n    } \n};\nnode.warn(\"✅ Выход 3: статистика\");\n\nnode.warn(\"🎉 Анализ завершен успешно!\");\n\nreturn outputs;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "0ca8ee0240a1b26d"
+            ]
+        ],
+        "outputLabels": [
+            "1"
+        ]
+    },
+    {
+        "id": "a24da7321e1980d6",
+        "type": "link out",
+        "z": "f4295493b9317073",
+        "name": "К визуализации",
+        "mode": "link",
+        "links": [],
+        "x": 555,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0ca8ee0240a1b26d",
+        "type": "switch",
+        "z": "f4295493b9317073",
+        "name": "Разделение",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "\"completed",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "\"current\"",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "\"stats\"",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "b1b2fa9143d821fc"
+            ],
+            [
+                "92a2a2d6c5c378ab"
+            ],
+            [
+                "9c83aa9b1e10490e"
+            ]
+        ]
+    },
+    {
+        "id": "b1b2fa9143d821fc",
+        "type": "debug",
+        "z": "f4295493b9317073",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "92a2a2d6c5c378ab",
+        "type": "debug",
+        "z": "f4295493b9317073",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9c83aa9b1e10490e",
+        "type": "debug",
+        "z": "f4295493b9317073",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 180,
+        "wires": []
+    }
+]
