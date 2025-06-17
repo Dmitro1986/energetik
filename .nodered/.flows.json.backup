@@ -2,6 +2,14 @@
     {
         "id": "b07d4603f9e21fa9",
         "type": "tab",
+        "label": "Flow 0",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "269ac4879acc37a0",
+        "type": "tab",
         "label": "Flow 1",
         "disabled": false,
         "info": "",
@@ -46,6 +54,28 @@
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "da27c0180ecc5808",
+        "type": "ui_group",
+        "z": "269ac4879acc37a0",
+        "name": "Графики",
+        "tab": "41bf31f28effcfec",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0f12b2b3b6aacf80",
+        "type": "ui_spacer",
+        "z": "269ac4879acc37a0",
+        "name": "spacer",
+        "group": "da27c0180ecc5808",
+        "order": 1,
+        "width": "",
+        "height": ""
     },
     {
         "id": "ead89403f19bf54d",
@@ -194,24 +224,32 @@
         "hidden": false
     },
     {
-        "id": "73fb796232f3d6a3",
-        "type": "ui_group",
-        "z": "d94404e769aeb0e3",
-        "name": "",
-        "tab": "a35f55e5747e115b",
-        "order": 4,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "01d3142331091824",
         "type": "ui_tab",
         "name": "Home",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
+    },
+    {
+        "id": "41bf31f28effcfec",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "73fb796232f3d6a3",
+        "type": "ui_group",
+        "z": "d94404e769aeb0e3",
+        "name": "",
+        "tab": "41bf31f28effcfec",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "0eb530cb159fd223",
@@ -389,10 +427,146 @@
         ]
     },
     {
-        "id": "45c06951fdd468c1",
+        "id": "174cec3a8b6a2d83",
         "type": "inject",
-        "z": "b07d4603f9e21fa9",
-        "name": "Добавить тестовые данные",
+        "z": "269ac4879acc37a0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "iso",
+        "payloadType": "date",
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "16047d77c7b23938"
+            ]
+        ]
+    },
+    {
+        "id": "16047d77c7b23938",
+        "type": "http request",
+        "z": "269ac4879acc37a0",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Dnipro&appid=6df6e90d294f8b95dd87547766058540&units=metric&lang=ru",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "32d01a5c6cfb185e"
+            ]
+        ]
+    },
+    {
+        "id": "32d01a5c6cfb185e",
+        "type": "function",
+        "z": "269ac4879acc37a0",
+        "name": "storageTemp",
+        "func": "// 1. Получаем массив с данными из постоянного хранилища (контекста потока).\n// Если его еще нет, создаем пустой массив [].\n// 'file' указывает, что мы используем хранилище на диске, настроенное в settings.js\nlet weatherData = flow.get('weatherData', 'file') || [];\n\n// 2. Извлекаем температуру из ответа API.\n// Путь к данным можно посмотреть в окне отладки (Debug).\nconst temp = msg.payload.main.temp;\n\n// 3. Проверяем, что температура получена корректно (является числом).\nif (typeof temp !== 'number') {\n    // Если что-то пошло не так, просто выходим, не портя данные.\n    node.warn(\"Температура не получена от API\");\n    return null;\n}\n\n// 4. Формируем новый объект для графика.\n// У графика должно быть имя (topic) и значение (payload).\n// Timestamp обязателен для временного ряда.\nconst newDataPoint = {\n    topic: \"Температура на улице\", // Это будет название линии на графике\n    payload: temp,\n    timestamp: new Date().getTime() // Текущее время в миллисекундах\n};\n\n// 5. Добавляем новую точку данных в наш массив.\nweatherData.push(newDataPoint);\n\n// 6. Ограничиваем размер массива, чтобы не хранить данные вечно.\n// 31 день * 24 часа = 744 записи. Оставим с запасом, например, 750.\nif (weatherData.length > 750) {\n    // .shift() удаляет самый старый (первый) элемент из массива.\n    weatherData.shift();\n}\n\n// 7. Сохраняем обновленный массив обратно в постоянное хранилище.\nflow.set('weatherData', weatherData, 'file');\n\n// 8. ИСПРАВЛЕНИЕ: Отправляем только новую точку данных на график\n// Chart узел сам накопит все точки и построит график\nmsg.payload = newDataPoint;\n\n// 9. Возвращаем сообщение, чтобы оно пошло дальше, на график.\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "f2d1b77934d6746b"
+            ]
+        ]
+    },
+    {
+        "id": "7da493873775a4cf",
+        "type": "debug",
+        "z": "269ac4879acc37a0",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f2d1b77934d6746b",
+        "type": "ui_chart",
+        "z": "269ac4879acc37a0",
+        "name": "",
+        "group": "39f87d3734dc643d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "температура на улице",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "start",
+        "dot": false,
+        "ymin": "-20",
+        "ymax": "40",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 730,
+        "y": 360,
+        "wires": [
+            [
+                "7da493873775a4cf"
+            ]
+        ]
+    },
+    {
+        "id": "ba144f205341fb6b",
+        "type": "inject",
+        "z": "269ac4879acc37a0",
+        "name": "startLoad",
         "props": [
             {
                 "p": "payload"
@@ -406,33 +580,35 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "topic": "test_data",
-        "payload": "",
+        "topic": "",
+        "payload": "iso",
         "payloadType": "date",
-        "x": 200,
+        "x": 60,
         "y": 60,
         "wires": [
             [
-                "ac6199d6d1efbed6"
+                "7a34893f77ab890e"
             ]
         ]
     },
     {
-        "id": "ac6199d6d1efbed6",
+        "id": "7a34893f77ab890e",
         "type": "function",
-        "z": "b07d4603f9e21fa9",
-        "name": "function 1",
-        "func": "// FUNCTION NODE: \"Тестовые данные\"\n\nnode.warn(\"🎯 Добавляем тестовые исторические данные...\");\n\n// Получаем существующие данные\nlet readings = global.get('readings_main_electric') || [];\nnode.warn(\"📊 Текущие данные: \" + readings.length + \" записей\");\n\n// Создаем данные за позавчера\nconst dayBefore = new Date();\ndayBefore.setDate(dayBefore.getDate() - 2);\nconst dayBeforeStr = dayBefore.toISOString().split('T')[0];\n\nconst testDataDayBefore = [\n    {\n        id: `reading_test_${dayBefore.getTime()}`,\n        meterId: 'main_electric',\n        value: 900,  // Начало позавчера\n        operator: 'TestUser',\n        timestamp: dayBefore.getTime(),\n        date: `${dayBeforeStr}, 08:00:00`,\n        source: 'test',\n        validated: true\n    },\n    {\n        id: `reading_test_${dayBefore.getTime() + 50400000}`, // +14 часов\n        meterId: 'main_electric',\n        value: 930,  // Конец позавчера (потребление 30 кВт·ч)\n        operator: 'TestUser',\n        timestamp: dayBefore.getTime() + 50400000,\n        date: `${dayBeforeStr}, 22:00:00`,\n        source: 'test',\n        validated: true\n    }\n];\n\n// Создаем данные за вчера\nconst yesterday = new Date();\nyesterday.setDate(yesterday.getDate() - 1);\nconst yesterdayStr = yesterday.toISOString().split('T')[0];\n\nconst testDataYesterday = [\n    {\n        id: `reading_test_${yesterday.getTime()}`,\n        meterId: 'main_electric',\n        value: 930,  // Начало вчера (равно концу позавчера)\n        operator: 'TestUser',\n        timestamp: yesterday.getTime(),\n        date: `${yesterdayStr}, 08:30:00`,\n        source: 'test',\n        validated: true\n    },\n    {\n        id: `reading_test_${yesterday.getTime() + 54000000}`, // +15 часов\n        meterId: 'main_electric',\n        value: 955,  // Конец вчера (потребление 25 кВт·ч)\n        operator: 'TestUser',\n        timestamp: yesterday.getTime() + 54000000,\n        date: `${yesterdayStr}, 23:30:00`,\n        source: 'test',\n        validated: true\n    }\n];\n\n// Фильтруем существующие тестовые данные (если есть)\nconst realReadings = readings.filter(r => r.source !== 'test');\n\n// Объединяем все данные\nconst allData = [...testDataDayBefore, ...testDataYesterday, ...realReadings];\nallData.sort((a, b) => a.timestamp - b.timestamp);\n\n// Сохраняем во все хранилища\ntry {\n    global.set('readings_main_electric', allData);\n    flow.set('readings_main_electric', allData);\n    flow.set('readings_main_electric', allData, 'file');\n    \n    node.warn(\"✅ Тестовые данные добавлены:\");\n    node.warn(`  ${dayBeforeStr}: 900 → 930 кВт·ч (30 кВт·ч потребление)`);\n    node.warn(`  ${yesterdayStr}: 930 → 955 кВт·ч (25 кВт·ч потребление)`);\n    node.warn(\"📊 Всего записей: \" + allData.length);\n    node.warn(\"📋 Реальных записей: \" + realReadings.length);\n    node.warn(\"📋 Тестовых записей: \" + (allData.length - realReadings.length));\n    \n} catch (error) {\n    node.error(\"❌ Ошибка сохранения: \" + error.message);\n}\n\nreturn { \n    payload: { \n        success: true, \n        message: \"Тестовые данные добавлены\",\n        totalRecords: allData.length,\n        testRecords: allData.length - realReadings.length\n    } \n};",
+        "z": "269ac4879acc37a0",
+        "name": "loadHistory",
+        "func": "// Функция для загрузки всех сохраненных данных в график при старте системы\n// Подключается к узлу inject с настройкой \"inject once after 0.1 seconds\"\n\n// 1. Получаем все сохраненные данные из хранилища\nlet weatherData = flow.get('weatherData', 'file') || [];\n\n// 2. Проверяем, есть ли данные для загрузки\nif (weatherData.length === 0) {\n    node.warn(\"Нет исторических данных для загрузки\");\n    return null;\n}\n\n// 3. Отправляем каждую точку данных отдельным сообщением на график\n// Используем небольшую задержку между сообщениями, чтобы график успевал обрабатывать\nweatherData.forEach((point, index) => {\n    setTimeout(() => {\n        // Создаем новое сообщение для каждой точки\n        const historicalMsg = {\n            payload: point.payload,\n            topic: point.topic,\n            timestamp: point.timestamp\n        };\n        \n        // Отправляем сообщение на график\n        node.send(historicalMsg);\n    }, index * 10); // Задержка 10 миллисекунд между каждой точкой\n});\n\n// 4. Логируем количество загруженных точек\nnode.log(`Загружено ${weatherData.length} исторических точек данных`);\n\n// 5. Возвращаем null, так как мы уже отправили все сообщения через node.send()\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 460,
+        "x": 290,
         "y": 60,
         "wires": [
-            []
+            [
+                "f2d1b77934d6746b"
+            ]
         ]
     },
     {
