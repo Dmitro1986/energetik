@@ -56,28 +56,6 @@
         "env": []
     },
     {
-        "id": "da27c0180ecc5808",
-        "type": "ui_group",
-        "z": "269ac4879acc37a0",
-        "name": "Графики",
-        "tab": "41bf31f28effcfec",
-        "order": 1,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "0f12b2b3b6aacf80",
-        "type": "ui_spacer",
-        "z": "269ac4879acc37a0",
-        "name": "spacer",
-        "group": "da27c0180ecc5808",
-        "order": 1,
-        "width": "",
-        "height": ""
-    },
-    {
         "id": "ead89403f19bf54d",
         "type": "ui_tab",
         "name": "UKRENERGOMASH",
@@ -234,7 +212,7 @@
     {
         "id": "41bf31f28effcfec",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "Графики",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
@@ -250,6 +228,28 @@
         "width": 6,
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "da27c0180ecc5808",
+        "type": "ui_group",
+        "z": "269ac4879acc37a0",
+        "name": "Графики",
+        "tab": "41bf31f28effcfec",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0f12b2b3b6aacf80",
+        "type": "ui_spacer",
+        "z": "269ac4879acc37a0",
+        "name": "spacer",
+        "group": "da27c0180ecc5808",
+        "order": 1,
+        "width": "",
+        "height": ""
     },
     {
         "id": "0eb530cb159fd223",
@@ -521,7 +521,7 @@
         "type": "ui_chart",
         "z": "269ac4879acc37a0",
         "name": "",
-        "group": "39f87d3734dc643d",
+        "group": "da27c0180ecc5808",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -576,14 +576,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "3600",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "iso",
         "payloadType": "date",
-        "x": 60,
+        "x": 70,
         "y": 60,
         "wires": [
             [
