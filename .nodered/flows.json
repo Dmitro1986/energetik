@@ -32,9 +32,25 @@
         "env": []
     },
     {
+        "id": "9d4bdbfddfe09ef6",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a650a48f3182bde2",
+        "type": "tab",
+        "label": "Flow 6",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "ead89403f19bf54d",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "UKRENERGOMASH",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
@@ -46,8 +62,8 @@
             "name": "theme-light",
             "lightTheme": {
                 "default": "#0094CE",
-                "baseColor": "#0094CE",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "baseColor": "#8d9091",
+                "baseFont": "Palatino Linotype,Palatino,Book Antiqua,serif",
                 "edited": true,
                 "reset": false
             },
@@ -66,11 +82,11 @@
             "themeState": {
                 "base-color": {
                     "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
+                    "value": "#8d9091",
+                    "edited": true
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
+                    "value": "#8d9091",
                     "edited": false
                 },
                 "page-backgroundColor": {
@@ -82,7 +98,7 @@
                     "edited": false
                 },
                 "group-textColor": {
-                    "value": "#1bbfff",
+                    "value": "#b4b6b7",
                     "edited": false
                 },
                 "group-borderColor": {
@@ -98,7 +114,7 @@
                     "edited": false
                 },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
+                    "value": "#8d9091",
                     "edited": false
                 },
                 "widget-borderColor": {
@@ -106,7 +122,7 @@
                     "edited": false
                 },
                 "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                    "value": "Palatino Linotype,Palatino,Book Antiqua,serif"
                 }
             },
             "angularTheme": {
@@ -159,6 +175,37 @@
         "className": ""
     },
     {
+        "id": "39f87d3734dc643d",
+        "type": "ui_group",
+        "name": "Статистика",
+        "tab": "ead89403f19bf54d",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "73fb796232f3d6a3",
+        "type": "ui_group",
+        "z": "d94404e769aeb0e3",
+        "name": "",
+        "tab": "a35f55e5747e115b",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a35f55e5747e115b",
+        "type": "ui_tab",
+        "name": "UKRENERGOMASH",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "0eb530cb159fd223",
         "type": "ui_button",
         "z": "b07d4603f9e21fa9",
@@ -171,7 +218,7 @@
         "label": "сохранить показания",
         "tooltip": "Нажмите для сохранения",
         "color": "#FFFFFF",
-        "bgcolor": "#4CAF50",
+        "bgcolor": "#292322",
         "className": "",
         "icon": "",
         "payload": "submit",
@@ -191,7 +238,7 @@
         "type": "function",
         "z": "b07d4603f9e21fa9",
         "name": "Валидация",
-        "func": "// ОТЛАДКА: Проверяем что код вообще выполняется\nnode.warn(\"🚀 Код запущен! Topic: \" + msg.topic + \", Payload: \" + JSON.stringify(msg.payload));\n\n// 1. Сохраняем данные от поля показаний\nif (msg.topic === \"meter_reading\") {\n    node.warn(\"💾 Сохраняем показания: \" + msg.payload);\n    let reading = msg.payload;\n    // Если это строка, преобразуем в число\n    if (typeof reading === 'string') {\n        reading = parseFloat(reading.replace(',', '.'));\n    }\n    flow.set('current_reading', reading);\n    node.warn(\"✅ Показания сохранены: \" + reading);\n    return null;\n}\n\n// 2. Сохраняем данные от поля оператора\nif (msg.topic === \"operator_name\") {\n    node.warn(\"💾 Сохраняем оператора: \" + msg.payload);\n    flow.set('current_operator', msg.payload);\n    node.warn(\"✅ Оператор сохранен: \" + msg.payload);\n    return null;\n}\n\n// 3. Валидация при сохранении\nif (msg.topic === \"save_reading\") {\n    node.warn(\"🔥 НАЧАЛАСЬ ВАЛИДАЦИЯ!\");\n\n    const meterReading = flow.get('current_reading');\n    const operator = flow.get('current_operator') || '';\n\n    node.warn(\"📊 Собранные данные: показания=\" + meterReading + \", оператор=\" + operator);\n\n    // Проверяем все поля\n    const errors = [];\n\n    if (!meterReading || isNaN(meterReading) || meterReading <= 0) {\n        errors.push('Введите корректные показания счетчика');\n    }\n\n    if (operator.trim() === '') {\n        errors.push('Укажите кто снимал показания');\n    }\n\n    node.warn(\"🔍 Ошибки валидации: \" + JSON.stringify(errors));\n\n    if (errors.length > 0) {\n        node.warn(\"❌ Есть ошибки, отправляем сообщение об ошибке\");\n        const errorMsg = {\n            payload: {\n                error: true,\n                message: errors.join('; ')\n            }\n        };\n        return [errorMsg, null];\n    }\n\n    // ИСПРАВЛЕНО: Правильное чтение данных из файла\n    node.warn(\"📂 Читаем файл...\");\n    const fileData = flow.get('readings_main_electric', 'file') || {};\n\n    // Преобразуем объект с числовыми ключами в массив\n    let lastReadings = [];\n    if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n        if (Array.isArray(fileData)) {\n            lastReadings = fileData;\n        } else {\n            // Преобразуем объект в массив по числовым ключам\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            lastReadings = keys.map(key => fileData[key]);\n            node.warn(\"✅ Преобразовали объект в массив, элементов: \" + lastReadings.length);\n        }\n    }\n\n    node.warn(\"📊 Итого записей в массиве: \" + lastReadings.length);\n    const lastReading = lastReadings[lastReadings.length - 1];\n    node.warn(\"🎯 Последняя запись: \" + JSON.stringify(lastReading));\n\n    // Проверяем что новые показания больше предыдущих\n    if (lastReading && meterReading <= lastReading.value) {\n        node.warn(\"❌ Показания меньше предыдущих!\");\n        const errorMsg = {\n            payload: {\n                error: true,\n                message: `Показания должны быть больше предыдущих (${lastReading.value} кВт·ч)`\n            }\n        };\n        return [errorMsg, null];\n    }\n\n    // Формируем валидированные данные\n    const validatedData = {\n        meterId: 'main_electric',\n        reading: parseFloat(meterReading),\n        operator: operator.trim(),\n        timestamp: Date.now(),\n        date: new Date().toLocaleString('ru-RU'),\n        source: 'dashboard'\n    };\n    // Второй выход - к узлу сохранения\n    return [null, { payload: validatedData }];\n}\n\n    // node.warn(\"📋 Базовые данные сформированы: \" + JSON.stringify(validatedData));\n\n    // Рассчитываем потребление если есть предыдущие показания\n//     if (lastReading) {\n//         node.warn(\"🧮 Начинаем расчет потребления...\");\n//         const consumption = validatedData.reading - lastReading.value;\n//         const timeDiff = validatedData.timestamp - lastReading.timestamp;\n//         const days = timeDiff / (1000 * 60 * 60 * 24);\n\n//         validatedData.consumption = Math.round(consumption * 100) / 100;\n//         validatedData.daysSinceLastReading = Math.round(days * 10) / 10;\n//         validatedData.avgDailyConsumption = days > 0 ? Math.round((consumption / days) * 100) / 100 : 0;\n//         validatedData.lastReading = lastReading.value;\n\n//         node.warn(`🧮 Расчет: ${validatedData.reading} - ${lastReading.value} = ${consumption}`);\n//         node.warn(`📅 Дней: ${days.toFixed(2)}, Среднее: ${validatedData.avgDailyConsumption}`);\n//         node.warn(\"✅ Расчет завершен!\");\n//     } else {\n//         node.warn(\"⚠️ Нет предыдущих записей для расчета потребления\");\n//     }\n\n//     const successMsg = {\n//         payload: validatedData\n//     };\n\n//     node.warn(\"🎉 Отправляем успешные данные: \" + JSON.stringify(successMsg));\n//     return [null, successMsg];\n// }\n\n// node.warn(\"⚠️ Неизвестный topic: \" + msg.topic);\nreturn null;",
+        "func": "// ОТЛАДКА: Проверяем что код вообще выполняется\nnode.warn(\"🚀 Код запущен! Topic: \" + msg.topic + \", Payload: \" + JSON.stringify(msg.payload));\n\n// 1. Сохраняем данные от поля показаний\nif (msg.topic === \"meter_reading\") {\n    node.warn(\"💾 Сохраняем показания: \" + msg.payload);\n    let reading = msg.payload;\n    // Если это строка, преобразуем в число\n    if (typeof reading === 'string') {\n        reading = parseFloat(reading.replace(',', '.'));\n    }\n    flow.set('current_reading', reading);\n    node.warn(\"✅ Показания сохранены: \" + reading);\n    return null;\n}\n\n// 2. Сохраняем данные от поля оператора\nif (msg.topic === \"operator_name\") {\n    node.warn(\"💾 Сохраняем оператора: \" + msg.payload);\n    flow.set('current_operator', msg.payload);\n    node.warn(\"✅ Оператор сохранен: \" + msg.payload);\n    return null;\n}\n\n// 3. Валидация при сохранении\nif (msg.topic === \"save_reading\") {\n    node.warn(\"🔥 НАЧАЛАСЬ ВАЛИДАЦИЯ!\");\n\n    const meterReading = flow.get('current_reading');\n    const operator = flow.get('current_operator') || '';\n\n    node.warn(\"📊 Собранные данные: показания=\" + meterReading + \", оператор=\" + operator);\n\n    // Проверяем все поля\n    const errors = [];\n\n    if (!meterReading || isNaN(meterReading) || meterReading <= 0) {\n        errors.push('Введите корректные показания счетчика');\n    }\n\n    if (operator.trim() === '') {\n        errors.push('Укажите кто снимал показания');\n    }\n\n    node.warn(\"🔍 Ошибки валидации: \" + JSON.stringify(errors));\n\n    if (errors.length > 0) {\n        node.warn(\"❌ Есть ошибки, отправляем сообщение об ошибке\");\n        const errorMsg = {\n            payload: {\n                error: true,\n                message: errors.join('; ')\n            }\n        };\n        return [errorMsg, null];\n    }\n\n    // ИСПРАВЛЕНО: Правильное чтение данных из файла\n    node.warn(\"📂 Читаем файл...\");\n    const fileData = flow.get('readings_main_electric', 'file') || {};\n\n    // Преобразуем объект с числовыми ключами в массив\n    let lastReadings = [];\n    if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n        if (Array.isArray(fileData)) {\n            lastReadings = fileData;\n        } else {\n            // Преобразуем объект в массив по числовым ключам\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            lastReadings = keys.map(key => fileData[key]);\n            node.warn(\"✅ Преобразовали объект в массив, элементов: \" + lastReadings.length);\n        }\n    }\n\n    node.warn(\"📊 Итого записей в массиве: \" + lastReadings.length);\n    const lastReading = lastReadings[lastReadings.length - 1];\n    node.warn(\"🎯 Последняя запись: \" + JSON.stringify(lastReading));\n\n    // Проверяем что новые показания больше предыдущих\n    if (lastReading && meterReading <= lastReading.value) {\n        node.warn(\"❌ Показания меньше предыдущих!\");\n        const errorMsg = {\n            payload: {\n                error: true,\n                message: `Показания должны быть больше предыдущих (${lastReading.value} кВт·ч)`\n            }\n        };\n        return [errorMsg, null];\n    }\n\n    // Формируем валидированные данные\n    const validatedData = {\n        meterId: 'main_electric',\n        reading: parseFloat(meterReading),\n        operator: operator.trim(),\n        timestamp: Date.now(),\n        date: new Date().toLocaleString('ru-RU'),\n        source: 'dashboard'\n    };\n    // Второй выход - к узлу сохранения\n    return [null, { payload: validatedData }];\n}\n\n    // node.warn(\"📋 Базовые данные сформированы: \" + JSON.stringify(validatedData));\n\n    // Рассчитываем потребление если есть предыдущие показания\n//     if (lastReading) {\n//         node.warn(\"🧮 Начинаем расчет потребления...\");\n//         const consumption = validatedData.reading - lastReading.value;\n//         const timeDiff = validatedData.timestamp - lastReading.timestamp;\n//         const days = timeDiff / (1000 * 60 * 60 * 24);\n\n//         validatedData.consumption = Math.round(consumption * 100) / 100;\n//         validatedData.daysSinceLastReading = Math.round(days * 10) / 10;\n//         validatedData.avgDailyConsumption = days > 0 ? Math.round((consumption / days) * 100) / 100 : 0;\n//         validatedData.lastReading = lastReading.value;\n\n//         node.warn(`🧮 Расчет: ${validatedData.reading} - ${lastReading.value} = ${consumption}`);\n//         node.warn(`📅 Дней: ${days.toFixed(2)}, Среднее: ${validatedData.avgDailyConsumption}`);\n//         node.warn(\"✅ Расчет завершен!\");\n//     } else {\n//         node.warn(\"⚠️ Нет предыдущих записей для расчета потребления\");\n//     }\n\n//     const successMsg = {\n//         payload: validatedData\n//     };\n\n//     node.warn(\"🎉 Отправляем успешные данные: \" + JSON.stringify(successMsg));\n//     return [null, successMsg];\n// }\n\n// node.warn(\"⚠️ Неизвестный topic: \" + msg.topic);\n// return null;",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
@@ -226,7 +273,8 @@
         "wires": [
             [
                 "c0bd619211d46e21",
-                "7079e0341a145ceb"
+                "7079e0341a145ceb",
+                "936be9e4dbb62789"
             ]
         ]
     },
@@ -289,7 +337,7 @@
         "label": "Кто снимал показания",
         "tooltip": "Введите ваше имя",
         "group": "82e8868c9dc7bdc3",
-        "order": 0,
+        "order": 12,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -322,7 +370,7 @@
         "mode": "text",
         "delay": 300,
         "topic": "meter_reading",
-        "sendOnBlur": true,
+        "sendOnBlur": false,
         "className": "",
         "topicType": "str",
         "x": 140,
@@ -381,6 +429,22 @@
         ]
     },
     {
+        "id": "936be9e4dbb62789",
+        "type": "debug",
+        "z": "b07d4603f9e21fa9",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 280,
+        "wires": []
+    },
+    {
         "id": "b0b132cd223ce431",
         "type": "link in",
         "z": "f4295493b9317073",
@@ -401,7 +465,7 @@
         "type": "function",
         "z": "f4295493b9317073",
         "name": "Анализ данных",
-        "func": "// УЗЕЛ \"АНАЛИЗ ДАННЫХ\" - ПОЛНЫЙ КОД\n\nnode.warn(\"🚀 Начинаем анализ данных...\");\n\nconst data = msg.payload;\n\n// ========== БЛОК 1: ПОИСК ДАННЫХ ==========\nlet allReadings = [];\nlet dataSource = \"не найден\";\n\ntry {\n    // Попытка 1: Memory storage\n    let memoryData = flow.get('readings_main_electric') || [];\n    if (Array.isArray(memoryData) && memoryData.length > 0) {\n        allReadings = memoryData;\n        dataSource = \"memory storage\";\n    }\n    \n    // Попытка 2: Global storage\n    if (allReadings.length === 0) {\n        let globalData = global.get('readings_main_electric') || [];\n        if (Array.isArray(globalData) && globalData.length > 0) {\n            allReadings = globalData;\n            dataSource = \"global storage\";\n        }\n    }\n    \n    // Попытка 3: File storage\n    if (allReadings.length === 0) {\n        let fileData = flow.get('readings_main_electric', 'file') || {};\n        if (Array.isArray(fileData)) {\n            allReadings = fileData;\n            dataSource = \"file storage (массив)\";\n        } else if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            if (keys.length > 0) {\n                allReadings = keys.map(key => fileData[key]);\n                dataSource = \"file storage (объект)\";\n            }\n        }\n    }\n    \n} catch (error) {\n    node.error(\"❌ Ошибка поиска данных: \" + error.message);\n}\n\nnode.warn(\"📊 ИТОГО найдено записей: \" + allReadings.length + \" из источника: \" + dataSource);\n\nif (allReadings.length === 0) {\n    node.warn(\"⚠️ НЕТ ДАННЫХ ДЛЯ АНАЛИЗА!\");\n    return null;\n}\n\nnode.warn(\"📋 Первая запись: \" + JSON.stringify(allReadings[0]));\nnode.warn(\"📋 Последняя запись: \" + JSON.stringify(allReadings[allReadings.length - 1]));\n\n// ========== БЛОК 2: ГРУППИРОВКА ПО ДНЯМ ==========\nnode.warn(\"📅 Группируем показания по дням...\");\n\nfunction groupByDays(readings) {\n    const groups = {};\n    try {\n        readings.forEach((reading, index) => {\n            if (!reading.timestamp) {\n                node.warn(`⚠️ Пропускаем запись ${index} без timestamp`);\n                return;\n            }\n            \n            const date = new Date(reading.timestamp);\n            if (isNaN(date.getTime())) {\n                node.warn(`⚠️ Некорректная дата в записи ${index}: ${reading.timestamp}`);\n                return;\n            }\n            \n            const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;\n            \n            if (!groups[dayKey]) {\n                groups[dayKey] = [];\n            }\n            groups[dayKey].push(reading);\n        });\n    } catch (error) {\n        node.error(\"❌ Ошибка группировки: \" + error.message);\n    }\n    return groups;\n}\n\nconst dayGroups = groupByDays(allReadings);\nconst dayKeys = Object.keys(dayGroups).sort();\n\nnode.warn(\"📊 Дней с показаниями: \" + dayKeys.length);\nnode.warn(\"📅 Даты: \" + dayKeys.join(', '));\n\n// Определяем сегодняшний день\nconst today = new Date().toISOString().split('T')[0];\nnode.warn(\"📆 Сегодня: \" + today);\n\n// ========== БЛОК 3: РАСЧЕТ ЗАВЕРШЕННЫХ ДНЕЙ ==========\nnode.warn(\"🧮 Рассчитываем потребление по завершенным дням...\");\n\nconst completedDays = [];\nlet totalConsumption = 0;\n\ntry {\n    for (let i = 1; i < dayKeys.length; i++) {\n        const currentDayKey = dayKeys[i];\n        const prevDayKey = dayKeys[i - 1];\n        \n        const currentDayReadings = dayGroups[currentDayKey];\n        const prevDayReadings = dayGroups[prevDayKey];\n        \n        // Находим максимальные показания каждого дня\n        const currentMax = Math.max(...currentDayReadings.map(r => r.value));\n        const prevMax = Math.max(...prevDayReadings.map(r => r.value));\n        \n        const dayConsumption = currentMax - prevMax;\n        \n        // Добавляем только завершенные дни (не сегодняшний)\n        if (currentDayKey !== today) {\n            totalConsumption += dayConsumption;\n            completedDays.push({\n                date: currentDayKey,\n                consumption: Math.round(dayConsumption * 100) / 100,\n                startReading: prevMax,\n                endReading: currentMax\n            });\n            \n            node.warn(`📊 ${currentDayKey}: ${prevMax} → ${currentMax} = ${dayConsumption} кВт·ч`);\n        } else {\n            node.warn(`⏰ ${currentDayKey} (сегодня): ${prevMax} → ${currentMax} = ${dayConsumption} кВт·ч - не учитываем как завершенный`);\n        }\n    }\n    \n    node.warn(\"✅ Завершенных дней обработано: \" + completedDays.length);\n    node.warn(\"📈 Общее потребление завершенных дней: \" + totalConsumption + \" кВт·ч\");\n    \n} catch (error) {\n    node.error(\"❌ Ошибка расчета завершенных дней: \" + error.message);\n}\n\n// ========== БЛОК 4: РАСЧЕТ ТЕКУЩЕГО ДНЯ ==========\nnode.warn(\"⏰ Рассчитываем текущий день...\");\n\nlet currentDayData = null;\n\nif (dayGroups[today] && dayKeys.length > 1) {\n    try {\n        const todayReadings = dayGroups[today];\n        \n        // Находим предыдущий день для сравнения\n        const yesterdayKey = dayKeys[dayKeys.length - 2]; // предпоследний день\n        const yesterdayReadings = dayGroups[yesterdayKey];\n        const yesterdayMax = Math.max(...yesterdayReadings.map(r => r.value));\n        \n        const currentReading = Math.max(...todayReadings.map(r => r.value));\n        \n        node.warn(\"📊 Данные сегодня:\");\n        node.warn(\"  Вчера (\" + yesterdayKey + \") макс: \" + yesterdayMax);\n        node.warn(\"  Сегодня (\" + today + \") макс: \" + currentReading);\n        \n        // Расчет времени\n        const now = new Date();\n        const hoursElapsed = now.getHours() + (now.getMinutes() / 60) + (now.getSeconds() / 3600);\n        const safeHours = Math.max(hoursElapsed, 0.1); // минимум 6 минут\n        \n        const currentConsumption = currentReading - yesterdayMax;\n        const projectedDaily = (currentConsumption / safeHours) * 24;\n        \n        currentDayData = {\n            date: today,\n            consumption: Math.round(currentConsumption * 100) / 100,\n            hoursElapsed: Math.round(safeHours * 10) / 10,\n            projectedDaily: Math.round(projectedDaily * 100) / 100,\n            startReading: yesterdayMax,\n            currentReading: currentReading\n        };\n        \n        node.warn(\"✅ Текущий день:\");\n        node.warn(\"  Потребление: \" + currentDayData.consumption + \" кВт·ч\");\n        node.warn(\"  Часов прошло: \" + currentDayData.hoursElapsed);\n        node.warn(\"  Прогноз на день: \" + currentDayData.projectedDaily + \" кВт·ч\");\n        \n    } catch (error) {\n        node.error(\"❌ Ошибка расчета текущего дня: \" + error.message);\n        currentDayData = null;\n    }\n} else {\n    if (!dayGroups[today]) {\n        node.warn(\"⚠️ Нет показаний на сегодня\");\n    }\n    if (dayKeys.length <= 1) {\n        node.warn(\"⚠️ Нужно минимум 2 дня для сравнения\");\n    }\n}\n\n// ========== БЛОК 5: СТАТИСТИКА ==========\nnode.warn(\"📈 Рассчитываем общую статистику...\");\n\nconst avgDailyConsumption = completedDays.length > 0 ? \n    Math.round((totalConsumption / completedDays.length) * 100) / 100 : 0;\n\nconst statsData = {\n    totalConsumption: Math.round(totalConsumption * 100) / 100,\n    avgDailyConsumption: avgDailyConsumption,\n    totalReadings: allReadings.length,\n    completedDaysCount: completedDays.length,\n    currentDayExists: !!currentDayData,\n    daysWithData: dayKeys.length\n};\n\nnode.warn(\"📊 Статистика:\");\nnode.warn(\"  Общее потребление: \" + statsData.totalConsumption + \" кВт·ч\");\nnode.warn(\"  Среднее в день: \" + statsData.avgDailyConsumption + \" кВт·ч\");\nnode.warn(\"  Всего показаний: \" + statsData.totalReadings);\nnode.warn(\"  Завершенных дней: \" + statsData.completedDaysCount);\nnode.warn(\"  Дней с данными: \" + statsData.daysWithData);\n\n// ========== БЛОК 6: ФОРМИРОВАНИЕ ВЫХОДОВ ==========\nnode.warn(\"📤 Формируем выходные сообщения...\");\n\nconst outputs = [];\n\n// Выход 1: Завершенные дни\nif (completedDays.length > 0) {\n    outputs[0] = { \n        payload: { \n            type: \"completed\", \n            data: completedDays \n        } \n    };\n    node.warn(\"✅ Выход 1: завершенные дни (\" + completedDays.length + \" записей)\");\n} else {\n    outputs[0] = null;\n    node.warn(\"⚠️ Выход 1: нет завершенных дней\");\n}\n\n// Выход 2: Текущий день\nif (currentDayData) {\n    outputs[1] = { \n        payload: { \n            type: \"current\", \n            data: currentDayData \n        } \n    };\n    node.warn(\"✅ Выход 2: текущий день\");\n} else {\n    outputs[1] = null;\n    node.warn(\"⚠️ Выход 2: нет данных текущего дня\");\n}\n\n// Выход 3: Статистика (всегда есть)\noutputs[2] = { \n    payload: { \n        type: \"stats\", \n        data: statsData \n    } \n};\nnode.warn(\"✅ Выход 3: статистика\");\n\nnode.warn(\"🎉 Анализ завершен успешно!\");\n\nreturn outputs;",
+        "func": "// УЗЕЛ \"АНАЛИЗ ДАННЫХ\" - ПОЛНЫЙ КОД\n\nnode.warn(\"🚀 Начинаем анализ данных...\");\n\nconst data = msg.payload;\n\n// ========== БЛОК 1: ПОИСК ДАННЫХ ==========\nlet allReadings = [];\nlet dataSource = \"не найден\";\n\ntry {\n    // Попытка 1: Memory storage\n    let memoryData = flow.get('readings_main_electric') || [];\n    if (Array.isArray(memoryData) && memoryData.length > 0) {\n        allReadings = memoryData;\n        dataSource = \"memory storage\";\n    }\n    \n    // Попытка 2: Global storage\n    if (allReadings.length === 0) {\n        let globalData = global.get('readings_main_electric') || [];\n        if (Array.isArray(globalData) && globalData.length > 0) {\n            allReadings = globalData;\n            dataSource = \"global storage\";\n        }\n    }\n    \n    // Попытка 3: File storage\n    if (allReadings.length === 0) {\n        let fileData = flow.get('readings_main_electric', 'file') || {};\n        if (Array.isArray(fileData)) {\n            allReadings = fileData;\n            dataSource = \"file storage (массив)\";\n        } else if (typeof fileData === 'object' && Object.keys(fileData).length > 0) {\n            const keys = Object.keys(fileData).filter(key => !isNaN(key)).sort((a, b) => parseInt(a) - parseInt(b));\n            if (keys.length > 0) {\n                allReadings = keys.map(key => fileData[key]);\n                dataSource = \"file storage (объект)\";\n            }\n        }\n    }\n    \n} catch (error) {\n    node.error(\"❌ Ошибка поиска данных: \" + error.message);\n}\n\nnode.warn(\"📊 ИТОГО найдено записей: \" + allReadings.length + \" из источника: \" + dataSource);\n\nif (allReadings.length === 0) {\n    node.warn(\"⚠️ НЕТ ДАННЫХ ДЛЯ АНАЛИЗА!\");\n    return null;\n}\n\nnode.warn(\"📋 Первая запись: \" + JSON.stringify(allReadings[0]));\nnode.warn(\"📋 Последняя запись: \" + JSON.stringify(allReadings[allReadings.length - 1]));\n\n// ========== БЛОК 2: ГРУППИРОВКА ПО ДНЯМ ==========\nnode.warn(\"📅 Группируем показания по дням...\");\n\nfunction groupByDays(readings) {\n    const groups = {};\n    try {\n        readings.forEach((reading, index) => {\n            if (!reading.timestamp) {\n                node.warn(`⚠️ Пропускаем запись ${index} без timestamp`);\n                return;\n            }\n            \n            const date = new Date(reading.timestamp);\n            if (isNaN(date.getTime())) {\n                node.warn(`⚠️ Некорректная дата в записи ${index}: ${reading.timestamp}`);\n                return;\n            }\n            \n            const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;\n            \n            if (!groups[dayKey]) {\n                groups[dayKey] = [];\n            }\n            groups[dayKey].push(reading);\n        });\n    } catch (error) {\n        node.error(\"❌ Ошибка группировки: \" + error.message);\n    }\n    return groups;\n}\n\nconst dayGroups = groupByDays(allReadings);\nconst dayKeys = Object.keys(dayGroups).sort();\n\nnode.warn(\"📊 Дней с показаниями: \" + dayKeys.length);\nnode.warn(\"📅 Даты: \" + dayKeys.join(', '));\n\n// Определяем сегодняшний день\nconst today = new Date().toISOString().split('T')[0];\nnode.warn(\"📆 Сегодня: \" + today);\n\n// ========== БЛОК 3: РАСЧЕТ ЗАВЕРШЕННЫХ ДНЕЙ ==========\nnode.warn(\"🧮 Рассчитываем потребление по завершенным дням...\");\n\nconst completedDays = [];\nlet totalConsumption = 0;\n\ntry {\n    for (let i = 1; i < dayKeys.length; i++) {\n        const currentDayKey = dayKeys[i];\n        const prevDayKey = dayKeys[i - 1];\n        \n        const currentDayReadings = dayGroups[currentDayKey];\n        const prevDayReadings = dayGroups[prevDayKey];\n        \n        // Находим максимальные показания каждого дня\n        const currentMax = Math.max(...currentDayReadings.map(r => r.value));\n        const prevMax = Math.max(...prevDayReadings.map(r => r.value));\n        \n        const dayConsumption = currentMax - prevMax;\n        \n        // Добавляем только завершенные дни (не сегодняшний)\n        if (currentDayKey !== today) {\n            totalConsumption += dayConsumption;\n            completedDays.push({\n                date: currentDayKey,\n                consumption: Math.round(dayConsumption * 100) / 100,\n                startReading: prevMax,\n                endReading: currentMax\n            });\n            \n            node.warn(`📊 ${currentDayKey}: ${prevMax} → ${currentMax} = ${dayConsumption} кВт·ч`);\n        } else {\n            node.warn(`⏰ ${currentDayKey} (сегодня): ${prevMax} → ${currentMax} = ${dayConsumption} кВт·ч - не учитываем как завершенный`);\n        }\n    }\n    \n    node.warn(\"✅ Завершенных дней обработано: \" + completedDays.length);\n    node.warn(\"📈 Общее потребление завершенных дней: \" + totalConsumption + \" кВт·ч\");\n    \n} catch (error) {\n    node.error(\"❌ Ошибка расчета завершенных дней: \" + error.message);\n}\n\n// ========== БЛОК 4: РАСЧЕТ ТЕКУЩЕГО ДНЯ ==========\nnode.warn(\"⏰ Рассчитываем текущий день...\");\n\nlet currentDayData = null;\n\nif (dayGroups[today] && dayKeys.length > 1) {\n    try {\n        const todayReadings = dayGroups[today];\n        \n        // Находим предыдущий день для сравнения\n        const yesterdayKey = dayKeys[dayKeys.length - 2]; // предпоследний день\n        const yesterdayReadings = dayGroups[yesterdayKey];\n        const yesterdayMax = Math.max(...yesterdayReadings.map(r => r.value));\n        \n        const currentReading = Math.max(...todayReadings.map(r => r.value));\n        \n        node.warn(\"📊 Данные сегодня:\");\n        node.warn(\"  Вчера (\" + yesterdayKey + \") макс: \" + yesterdayMax);\n        node.warn(\"  Сегодня (\" + today + \") макс: \" + currentReading);\n        \n        // Расчет времени\n        const now = new Date();\n        const hoursElapsed = now.getHours() + (now.getMinutes() / 60) + (now.getSeconds() / 3600);\n        const safeHours = Math.max(hoursElapsed, 0.1); // минимум 6 минут\n        \n        const currentConsumption = currentReading - yesterdayMax;\n        const projectedDaily = (currentConsumption / safeHours) * 24;\n        \n        currentDayData = {\n            date: today,\n            consumption: Math.round(currentConsumption * 100) / 100,\n            hoursElapsed: Math.round(safeHours * 10) / 10,\n            projectedDaily: Math.round(projectedDaily * 100) / 100,\n            startReading: yesterdayMax,\n            currentReading: currentReading\n        };\n        \n        node.warn(\"✅ Текущий день:\");\n        node.warn(\"  Потребление: \" + currentDayData.consumption + \" кВт·ч\");\n        node.warn(\"  Часов прошло: \" + currentDayData.hoursElapsed);\n        node.warn(\"  Прогноз на день: \" + currentDayData.projectedDaily + \" кВт·ч\");\n        \n    } catch (error) {\n        node.error(\"❌ Ошибка расчета текущего дня: \" + error.message);\n        currentDayData = null;\n    }\n} else {\n    if (!dayGroups[today]) {\n        node.warn(\"⚠️ Нет показаний на сегодня\");\n    }\n    if (dayKeys.length <= 1) {\n        node.warn(\"⚠️ Нужно минимум 2 дня для сравнения\");\n    }\n}\n\n// ========== БЛОК 5: СТАТИСТИКА ==========\nnode.warn(\"📈 Рассчитываем общую статистику...\");\n\nconst avgDailyConsumption = completedDays.length > 0 ? \n    Math.round((totalConsumption / completedDays.length) * 100) / 100 : 0;\n\nconst statsData = {\n    totalConsumption: Math.round(totalConsumption * 100) / 100,\n    avgDailyConsumption: avgDailyConsumption,\n    totalReadings: allReadings.length,\n    completedDaysCount: completedDays.length,\n    currentDayExists: !!currentDayData,\n    daysWithData: dayKeys.length\n};\n\nnode.warn(\"📊 Статистика:\");\nnode.warn(\"  Общее потребление: \" + statsData.totalConsumption + \" кВт·ч\");\nnode.warn(\"  Среднее в день: \" + statsData.avgDailyConsumption + \" кВт·ч\");\nnode.warn(\"  Всего показаний: \" + statsData.totalReadings);\nnode.warn(\"  Завершенных дней: \" + statsData.completedDaysCount);\nnode.warn(\"  Дней с данными: \" + statsData.daysWithData);\n\n// ОБНОВЛЕННЫЙ узел \"Анализ данных\" в Flow 2\n// В конце кода замените блок формирования выходов:\n\n// ========== БЛОК 6: ОТПРАВКА В ОТДЕЛЬНЫЕ FLOW ==========\nnode.warn(\"📤 Отправляем данные в специализированные Flow...\");\n\n// Отправляем завершенные дни в Flow 3\nif (completedDays.length > 0) {\n    node.send([{\n        payload: {\n            type: \"completed\",\n            data: completedDays,\n            metadata: {\n                totalConsumption: totalConsumption,\n                avgConsumption: avgDailyConsumption\n            }\n        },\n        topic: \"completed_days\"\n    }, null, null]);\n    node.warn(\"✅ → Flow 3: завершенные дни (\" + completedDays.length + \" записей)\");\n}\n\n// Отправляем текущий день в Flow 4\nif (currentDayData) {\n    node.send([null, {\n        payload: {\n            type: \"current\",\n            data: currentDayData,\n            metadata: {\n                isPreliminary: true,\n                updateFrequency: \"real-time\"\n            }\n        },\n        topic: \"current_day\"\n    }, null]);\n    node.warn(\"✅ → Flow 4: текущий день\");\n}\n\n// Отправляем статистику в Flow 5\nnode.send([null, null, {\n    payload: {\n        type: \"stats\",\n        data: statsData,\n        metadata: {\n            lastUpdate: new Date().toISOString(),\n            dataSource: dataSource\n        }\n    },\n    topic: \"statistics\"\n}]);\nnode.warn(\"✅ → Flow 5: статистика\");\n\nnode.warn(\"🎉 Данные распределены по специализированным Flow!\");\n\nreturn null; // Возвращаем null, так как используем node.send()\n\n\n// // ========== БЛОК 6: ФОРМИРОВАНИЕ ВЫХОДОВ ==========\n// node.warn(\"📤 Формируем выходные сообщения...\");\n\n// const outputs = [];\n\n// // Выход 1: Завершенные дни\n// if (completedDays.length > 0) {\n//     outputs[0] = { \n//         payload: { \n//             type: \"completed\", \n//             data: completedDays \n//         } \n//     };\n//     node.warn(\"✅ Выход 1: завершенные дни (\" + completedDays.length + \" записей)\");\n// } else {\n//     outputs[0] = null;\n//     node.warn(\"⚠️ Выход 1: нет завершенных дней\");\n// }\n\n// // Выход 2: Текущий день\n// if (currentDayData) {\n//     outputs[1] = { \n//         payload: { \n//             type: \"current\", \n//             data: currentDayData \n//         } \n//     };\n//     node.warn(\"✅ Выход 2: текущий день\");\n// } else {\n//     outputs[1] = null;\n//     node.warn(\"⚠️ Выход 2: нет данных текущего дня\");\n// }\n\n// // Выход 3: Статистика (всегда есть)\n// outputs[2] = { \n//     payload: { \n//         type: \"stats\", \n//         data: statsData \n//     } \n// };\n// node.warn(\"✅ Выход 3: статистика\");\n\n// node.warn(\"🎉 Анализ завершен успешно!\");\n\n// return outputs;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -418,17 +482,6 @@
         "outputLabels": [
             "1"
         ]
-    },
-    {
-        "id": "a24da7321e1980d6",
-        "type": "link out",
-        "z": "f4295493b9317073",
-        "name": "К визуализации",
-        "mode": "link",
-        "links": [],
-        "x": 555,
-        "y": 360,
-        "wires": []
     },
     {
         "id": "0ca8ee0240a1b26d",
@@ -461,18 +514,60 @@
         "y": 120,
         "wires": [
             [
-                "b1b2fa9143d821fc"
+                "1d039c16c3a19e03",
+                "a04ef1184d323e39"
             ],
             [
-                "92a2a2d6c5c378ab"
+                "12bf177eef73527b",
+                "c06f5226c8a2e4c6"
             ],
             [
-                "9c83aa9b1e10490e"
+                "99c23a63807ab51e",
+                "b3de3b2798fa017d"
             ]
         ]
     },
     {
-        "id": "b1b2fa9143d821fc",
+        "id": "1d039c16c3a19e03",
+        "type": "link out",
+        "z": "f4295493b9317073",
+        "name": "completed",
+        "mode": "link",
+        "links": [
+            "81c8a89f1c8aa1fb"
+        ],
+        "x": 645,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "12bf177eef73527b",
+        "type": "link out",
+        "z": "f4295493b9317073",
+        "name": "current",
+        "mode": "link",
+        "links": [
+            "d62941d52d542904"
+        ],
+        "x": 655,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "99c23a63807ab51e",
+        "type": "link out",
+        "z": "f4295493b9317073",
+        "name": "stats",
+        "mode": "link",
+        "links": [
+            "c0d7e2e3986343f2"
+        ],
+        "x": 645,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a04ef1184d323e39",
         "type": "debug",
         "z": "f4295493b9317073",
         "name": "debug 1",
@@ -483,12 +578,12 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
-        "y": 60,
+        "x": 800,
+        "y": 20,
         "wires": []
     },
     {
-        "id": "92a2a2d6c5c378ab",
+        "id": "c06f5226c8a2e4c6",
         "type": "debug",
         "z": "f4295493b9317073",
         "name": "debug 2",
@@ -499,12 +594,12 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
-        "y": 120,
+        "x": 820,
+        "y": 160,
         "wires": []
     },
     {
-        "id": "9c83aa9b1e10490e",
+        "id": "b3de3b2798fa017d",
         "type": "debug",
         "z": "f4295493b9317073",
         "name": "debug 3",
@@ -515,8 +610,511 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 640,
+        "x": 780,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "81c8a89f1c8aa1fb",
+        "type": "link in",
+        "z": "63a029640d5e870a",
+        "name": "completed",
+        "links": [
+            "1d039c16c3a19e03"
+        ],
+        "x": 105,
+        "y": 80,
+        "wires": [
+            [
+                "7bab41d98a43d045"
+            ]
+        ]
+    },
+    {
+        "id": "7bab41d98a43d045",
+        "type": "function",
+        "z": "63a029640d5e870a",
+        "name": "Завершенные дни",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 80,
+        "wires": [
+            [
+                "bb39e22d26f1be47",
+                "5b771981109ccf29"
+            ]
+        ]
+    },
+    {
+        "id": "5b771981109ccf29",
+        "type": "ui_text",
+        "z": "63a029640d5e870a",
+        "group": "39f87d3734dc643d",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 430,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "bb39e22d26f1be47",
+        "type": "ui_chart",
+        "z": "63a029640d5e870a",
+        "name": "",
+        "group": "39f87d3734dc643d",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d62941d52d542904",
+        "type": "link in",
+        "z": "d94404e769aeb0e3",
+        "name": "current",
+        "links": [
+            "12bf177eef73527b"
+        ],
+        "x": 355,
+        "y": 60,
+        "wires": [
+            [
+                "c977291c45fb7495"
+            ]
+        ]
+    },
+    {
+        "id": "c977291c45fb7495",
+        "type": "function",
+        "z": "d94404e769aeb0e3",
+        "name": "Текущий день",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d1d21156832d2325",
+        "type": "ui_gauge",
+        "z": "d94404e769aeb0e3",
+        "name": "",
+        "group": "82e8868c9dc7bdc3",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 410,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "43aa6e7b5d99962a",
+        "type": "ui_text",
+        "z": "d94404e769aeb0e3",
+        "group": "82e8868c9dc7bdc3",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 410,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c0b2e57e80f54307",
+        "type": "ui_toast",
+        "z": "d94404e769aeb0e3",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 410,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c0d7e2e3986343f2",
+        "type": "link in",
+        "z": "9d4bdbfddfe09ef6",
+        "name": "stats",
+        "links": [
+            "99c23a63807ab51e"
+        ],
+        "x": 95,
+        "y": 40,
+        "wires": [
+            [
+                "2ad39599b6061187"
+            ]
+        ]
+    },
+    {
+        "id": "2ad39599b6061187",
+        "type": "function",
+        "z": "9d4bdbfddfe09ef6",
+        "name": "Статистика",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67013811deafc1fe",
+        "type": "ui_template",
+        "z": "9d4bdbfddfe09ef6",
+        "group": "39f87d3734dc643d",
+        "name": "",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\">Hello Flow5</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c106808ab26afaa",
+        "type": "ui_text",
+        "z": "9d4bdbfddfe09ef6",
+        "group": "82e8868c9dc7bdc3",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 130,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ef9714278292df8a",
+        "type": "ui_date_picker",
+        "z": "a650a48f3182bde2",
+        "name": "",
+        "label": "date",
+        "group": "82e8868c9dc7bdc3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 110,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8a160f8270b1a3c9",
+        "type": "ui_button",
+        "z": "a650a48f3182bde2",
+        "name": "",
+        "group": "82e8868c9dc7bdc3",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Отправить",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea860c58143a2770",
+        "type": "ui_dropdown",
+        "z": "a650a48f3182bde2",
+        "name": "",
+        "label": "Оператор",
+        "tooltip": "",
+        "place": "",
+        "group": "82e8868c9dc7bdc3",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "И_Пак",
+                "value": "ipak",
+                "type": "str"
+            },
+            {
+                "label": "Энергомаш",
+                "value": "energomash",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 110,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b88f6b93a015479",
+        "type": "ui_text_input",
+        "z": "a650a48f3182bde2",
+        "name": "",
+        "label": "Комментарий",
+        "tooltip": "",
+        "group": "82e8868c9dc7bdc3",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 140,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "644e20f422c0a2e3",
+        "type": "ui_text",
+        "z": "a650a48f3182bde2",
+        "group": "39f87d3734dc643d",
+        "order": 13,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Результат",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 150,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "b9191d13e2785956",
+        "type": "ui_dropdown",
+        "z": "a650a48f3182bde2",
+        "name": "",
+        "label": "Быстрый выбор времени ",
+        "tooltip": "08:00, 12:00, 18:00, 22:00, custom",
+        "place": "Быстрый выбор времени",
+        "group": "82e8868c9dc7bdc3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "08:00",
+                "value": "morning",
+                "type": "str"
+            },
+            {
+                "label": "12:00",
+                "value": "day",
+                "type": "str"
+            },
+            {
+                "label": "18:00",
+                "value": "evenung",
+                "type": "str"
+            },
+            {
+                "label": "24:00",
+                "value": "night",
+                "type": "str"
+            },
+            {
+                "label": "точное время",
+                "value": "custom",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "350724e42b7f5b6a",
+        "type": "ui_text_input",
+        "z": "a650a48f3182bde2",
+        "name": "",
+        "label": "Точное время",
+        "tooltip": "",
+        "group": "82e8868c9dc7bdc3",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "msg",
+        "x": 320,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46595edda34fea16",
+        "type": "ui_template",
+        "z": "a650a48f3182bde2",
+        "group": "4a24fb16ec28e780",
+        "name": "",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "format": "<div class=\"time-helper\">\n    <h4>🕐 Помощник ввода времени</h4>\n\n    <div class=\"quick-times\">\n        <button ng-repeat=\"time in quickTimes\"\n                ng-click=\"selectTime(time)\"\n                class=\"time-btn\">\n            {{time.label}}\n        </button>\n    </div>\n\n    <div class=\"current-time\">\n        <strong>Текущее время:</strong> {{currentTime}}\n        <button ng-click=\"useCurrentTime()\" class=\"use-current-btn\">Использовать текущее</button>\n    </div>\n</div>\n\n<script>\n    (function(scope) {\n    scope.quickTimes = [\n        {label: '08:00 Утро', value: '08:00'},\n        {label: '12:00 Обед', value: '12:00'},\n        {label: '18:00 Вечер', value: '18:00'},\n        {label: '22:00 Ночь', value: '22:00'}\n    ];\n    \n    // Обновляем текущее время каждую минуту\n    function updateCurrentTime() {\n        const now = new Date();\n        scope.currentTime = now.toTimeString().slice(0, 5);\n        scope.$apply();\n    }\n    \n    updateCurrentTime();\n    setInterval(updateCurrentTime, 60000);\n    \n    scope.selectTime = function(time) {\n        scope.send({payload: time.value, topic: 'hist_time_preset'});\n    };\n    \n    scope.useCurrentTime = function() {\n        scope.send({payload: scope.currentTime, topic: 'hist_time_custom'});\n    };\n    \n})(scope);\n</script>\n\n<style>\n    .time-helper {\n        background: #2e2e2e;\n        padding: 18px;\n        border-radius: 6px;\n        border-left: 3px solid #555;\n        border: 1px solid #404040;\n        margin: 8px 0;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);\n    }\n\n    .time-helper h4 {\n        margin: 0 0 12px 0;\n        color: #e0e0e0;\n        font-size: 14px;\n        font-weight: 500;\n        letter-spacing: 0.5px;\n    }\n\n    .quick-times {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 6px;\n        margin: 12px 0;\n    }\n\n    .time-btn {\n        background: #424242;\n        border: 1px solid #616161;\n        color: #e0e0e0;\n        padding: 8px 14px;\n        border-radius: 4px;\n        cursor: pointer;\n        font-size: 12px;\n        font-weight: 500;\n        transition: all 0.15s ease;\n        min-width: 80px;\n    }\n\n    .time-btn:hover {\n        background: #525252;\n        border-color: #757575;\n        transform: translateY(-1px);\n        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);\n    }\n\n    .time-btn:active {\n        transform: translateY(0);\n        background: #616161;\n    }\n\n    .current-time {\n        margin-top: 16px;\n        padding: 12px;\n        background: #383838;\n        border: 1px solid #505050;\n        border-radius: 4px;\n        font-size: 13px;\n        color: #d0d0d0;\n    }\n\n    .current-time strong {\n        color: #f0f0f0;\n    }\n\n    .use-current-btn {\n        margin-left: 12px;\n        background: #555;\n        color: #e0e0e0;\n        border: 1px solid #707070;\n        padding: 6px 12px;\n        border-radius: 3px;\n        cursor: pointer;\n        font-size: 11px;\n        font-weight: 500;\n        transition: all 0.15s ease;\n    }\n\n    .use-current-btn:hover {\n        background: #666;\n        border-color: #808080;\n    }\n\n    .use-current-btn:active {\n        background: #777;\n    }\n\n    /* Темная тема для всех элементов */\n    .time-helper * {\n        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    }\n\n    /* Адаптивность */\n    @media (max-width: 768px) {\n        .time-helper {\n            padding: 14px;\n            margin: 5px 0;\n        }\n\n        .quick-times {\n            gap: 4px;\n        }\n\n        .time-btn {\n            padding: 6px 10px;\n            font-size: 11px;\n            min-width: 70px;\n        }\n\n        .current-time {\n            padding: 10px;\n            font-size: 12px;\n        }\n\n        .use-current-btn {\n            margin-left: 8px;\n            padding: 5px 8px;\n            font-size: 10px;\n        }\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 120,
+        "y": 40,
+        "wires": [
+            []
+        ]
     }
 ]
