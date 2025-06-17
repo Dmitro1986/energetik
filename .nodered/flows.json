@@ -186,11 +186,19 @@
         "className": ""
     },
     {
+        "id": "a35f55e5747e115b",
+        "type": "ui_tab",
+        "name": "UKRENERGOMASH",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "73fb796232f3d6a3",
         "type": "ui_group",
         "z": "d94404e769aeb0e3",
         "name": "",
-        "tab": "a35f55e5747e115b",
+        "tab": "41bf31f28effcfec",
         "order": 4,
         "disp": true,
         "width": 6,
@@ -198,9 +206,17 @@
         "className": ""
     },
     {
-        "id": "a35f55e5747e115b",
+        "id": "01d3142331091824",
         "type": "ui_tab",
-        "name": "UKRENERGOMASH",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "41bf31f28effcfec",
+        "type": "ui_tab",
+        "name": "Home",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
@@ -273,8 +289,7 @@
         "wires": [
             [
                 "c0bd619211d46e21",
-                "7079e0341a145ceb",
-                "936be9e4dbb62789"
+                "7079e0341a145ceb"
             ]
         ]
     },
@@ -429,22 +444,6 @@
         ]
     },
     {
-        "id": "936be9e4dbb62789",
-        "type": "debug",
-        "z": "b07d4603f9e21fa9",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 660,
-        "y": 280,
-        "wires": []
-    },
-    {
         "id": "b0b132cd223ce431",
         "type": "link in",
         "z": "f4295493b9317073",
@@ -514,16 +513,13 @@
         "y": 120,
         "wires": [
             [
-                "1d039c16c3a19e03",
-                "a04ef1184d323e39"
+                "1d039c16c3a19e03"
             ],
             [
-                "12bf177eef73527b",
-                "c06f5226c8a2e4c6"
+                "12bf177eef73527b"
             ],
             [
-                "99c23a63807ab51e",
-                "b3de3b2798fa017d"
+                "99c23a63807ab51e"
             ]
         ]
     },
@@ -536,7 +532,7 @@
         "links": [
             "81c8a89f1c8aa1fb"
         ],
-        "x": 645,
+        "x": 765,
         "y": 60,
         "wires": []
     },
@@ -549,8 +545,8 @@
         "links": [
             "d62941d52d542904"
         ],
-        "x": 655,
-        "y": 120,
+        "x": 775,
+        "y": 200,
         "wires": []
     },
     {
@@ -562,56 +558,8 @@
         "links": [
             "c0d7e2e3986343f2"
         ],
-        "x": 645,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "a04ef1184d323e39",
-        "type": "debug",
-        "z": "f4295493b9317073",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 800,
-        "y": 20,
-        "wires": []
-    },
-    {
-        "id": "c06f5226c8a2e4c6",
-        "type": "debug",
-        "z": "f4295493b9317073",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 820,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "b3de3b2798fa017d",
-        "type": "debug",
-        "z": "f4295493b9317073",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 780,
-        "y": 320,
+        "x": 755,
+        "y": 340,
         "wires": []
     },
     {
@@ -626,7 +574,8 @@
         "y": 80,
         "wires": [
             [
-                "7bab41d98a43d045"
+                "7bab41d98a43d045",
+                "0dc932973eea9f7e"
             ]
         ]
     },
@@ -656,7 +605,7 @@
         "type": "ui_text",
         "z": "63a029640d5e870a",
         "group": "39f87d3734dc643d",
-        "order": 7,
+        "order": 3,
         "width": 0,
         "height": 0,
         "name": "",
@@ -678,7 +627,7 @@
         "z": "63a029640d5e870a",
         "name": "",
         "group": "39f87d3734dc643d",
-        "order": 8,
+        "order": 4,
         "width": 0,
         "height": 0,
         "label": "chart",
@@ -717,6 +666,22 @@
         ]
     },
     {
+        "id": "0dc932973eea9f7e",
+        "type": "debug",
+        "z": "63a029640d5e870a",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 240,
+        "y": 180,
+        "wires": []
+    },
+    {
         "id": "d62941d52d542904",
         "type": "link in",
         "z": "d94404e769aeb0e3",
@@ -737,7 +702,7 @@
         "type": "function",
         "z": "d94404e769aeb0e3",
         "name": "Текущий день",
-        "func": "\nreturn msg;",
+        "func": "//\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -755,8 +720,8 @@
         "type": "ui_gauge",
         "z": "d94404e769aeb0e3",
         "name": "",
-        "group": "82e8868c9dc7bdc3",
-        "order": 9,
+        "group": "39f87d3734dc643d",
+        "order": 2,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -814,7 +779,7 @@
         "className": "",
         "topic": "",
         "name": "",
-        "x": 410,
+        "x": 450,
         "y": 300,
         "wires": []
     },
@@ -858,7 +823,7 @@
         "z": "9d4bdbfddfe09ef6",
         "group": "39f87d3734dc643d",
         "name": "",
-        "order": 3,
+        "order": 1,
         "width": 0,
         "height": 0,
         "format": "<div ng-bind-html=\"msg.payload\">Hello Flow5</div>",
@@ -1005,7 +970,7 @@
         "type": "ui_text",
         "z": "a650a48f3182bde2",
         "group": "39f87d3734dc643d",
-        "order": 13,
+        "order": 5,
         "width": 0,
         "height": 0,
         "name": "",
